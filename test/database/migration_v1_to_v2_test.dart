@@ -395,10 +395,13 @@ void main() {
 
     expect(_hasTable(raw, 'traffic_stats'), isTrue);
     expect(_userVersion(raw), 11);
-    expect(await database.trafficStatsDao.getRecordsFrom(
-      '',
-      TrafficStatsScope.process,
-    ), isEmpty);
+    expect(
+      await database.trafficStatsDao.getRecordsFrom(
+        '',
+        TrafficStatsScope.process,
+      ),
+      isEmpty,
+    );
   });
 
   test('an empty v1 rules table still reaches v2', () async {
