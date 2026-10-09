@@ -777,5 +777,15 @@
   "large": "大",
   "extraLarge": "特大",
   "switchProfile": "プロファイルを切り替え",
-  "lastUpdated": "最終更新"
+  "lastUpdated": "最終更新",
+  "trafficStats": "トラフィック統計",
+  "byApp": "アプリ別",
+  "byService": "サービス別",
+  "trafficStatsToday": "今日",
+  "trafficStatsWeek": "過去7日間",
+  "trafficStatsAll": "すべて",
+  "proxyOnly": "プロキシのみ",
+  "clearTrafficStats": "統計を消去",
+  "clearTrafficStatsTip": "すべてのトラフィック統計を消去しますか？この操作は元に戻せません。",
+  "trafficStatsConnections": "{count} 件の接続"
 }

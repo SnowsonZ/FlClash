@@ -777,5 +777,15 @@
   "large": "Large",
   "extraLarge": "Extra large",
   "switchProfile": "Switch profile",
-  "lastUpdated": "Last updated"
+  "lastUpdated": "Last updated",
+  "trafficStats": "Traffic stats",
+  "byApp": "By app",
+  "byService": "By service",
+  "trafficStatsToday": "Today",
+  "trafficStatsWeek": "Last 7 days",
+  "trafficStatsAll": "All",
+  "proxyOnly": "Proxy only",
+  "clearTrafficStats": "Clear stats",
+  "clearTrafficStatsTip": "Clear all traffic statistics? This cannot be undone.",
+  "trafficStatsConnections": "{count} connections"
 }

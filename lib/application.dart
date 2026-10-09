@@ -101,6 +101,7 @@ class ApplicationState extends ConsumerState<Application> {
       _initLink();
       if (!safeModeBuild) {
         unawaited(app?.initShortcuts());
+        ref.read(trafficStatsActionProvider.notifier).start();
       }
     });
   }

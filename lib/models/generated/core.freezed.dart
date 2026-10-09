@@ -5180,6 +5180,576 @@ as int,
 
 
 /// @nodoc
+mixin _$TrafficKeyStat {
+
+ String get key; int get upload; int get download; int get proxyUpload; int get proxyDownload; int get connections;
+/// Create a copy of TrafficKeyStat
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TrafficKeyStatCopyWith<TrafficKeyStat> get copyWith => _$TrafficKeyStatCopyWithImpl<TrafficKeyStat>(this as TrafficKeyStat, _$identity);
+
+  /// Serializes this TrafficKeyStat to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  final _this = this as TrafficKeyStat;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrafficKeyStat&&(identical(other.key, _this.key) || other.key == _this.key)&&(identical(other.upload, _this.upload) || other.upload == _this.upload)&&(identical(other.download, _this.download) || other.download == _this.download)&&(identical(other.proxyUpload, _this.proxyUpload) || other.proxyUpload == _this.proxyUpload)&&(identical(other.proxyDownload, _this.proxyDownload) || other.proxyDownload == _this.proxyDownload)&&(identical(other.connections, _this.connections) || other.connections == _this.connections));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+  final _this = this as TrafficKeyStat;
+  return Object.hash(runtimeType,_this.key,_this.upload,_this.download,_this.proxyUpload,_this.proxyDownload,_this.connections);
+}
+
+@override
+String toString() {
+  final _this = this as TrafficKeyStat;
+  return 'TrafficKeyStat(key: ${_this.key}, upload: ${_this.upload}, download: ${_this.download}, proxyUpload: ${_this.proxyUpload}, proxyDownload: ${_this.proxyDownload}, connections: ${_this.connections})';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $TrafficKeyStatCopyWith<$Res>  {
+  factory $TrafficKeyStatCopyWith(TrafficKeyStat value, $Res Function(TrafficKeyStat) _then) = _$TrafficKeyStatCopyWithImpl;
+@useResult
+$Res call({
+ String key, int upload, int download, int proxyUpload, int proxyDownload, int connections
+});
+
+
+
+
+}
+/// @nodoc
+class _$TrafficKeyStatCopyWithImpl<$Res>
+    implements $TrafficKeyStatCopyWith<$Res> {
+  _$TrafficKeyStatCopyWithImpl(this._self, this._then);
+
+  final TrafficKeyStat _self;
+  final $Res Function(TrafficKeyStat) _then;
+
+/// Create a copy of TrafficKeyStat
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? key = null,Object? upload = null,Object? download = null,Object? proxyUpload = null,Object? proxyDownload = null,Object? connections = null,}) {
+  return _then(TrafficKeyStat(
+key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
+as String,upload: null == upload ? _self.upload : upload // ignore: cast_nullable_to_non_nullable
+as int,download: null == download ? _self.download : download // ignore: cast_nullable_to_non_nullable
+as int,proxyUpload: null == proxyUpload ? _self.proxyUpload : proxyUpload // ignore: cast_nullable_to_non_nullable
+as int,proxyDownload: null == proxyDownload ? _self.proxyDownload : proxyDownload // ignore: cast_nullable_to_non_nullable
+as int,connections: null == connections ? _self.connections : connections // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [TrafficKeyStat].
+extension TrafficKeyStatPatterns on TrafficKeyStat {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TrafficKeyStat value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TrafficKeyStat() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TrafficKeyStat value)  $default,){
+final _that = this;
+switch (_that) {
+case _TrafficKeyStat():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TrafficKeyStat value)?  $default,){
+final _that = this;
+switch (_that) {
+case _TrafficKeyStat() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String key,  int upload,  int download,  int proxyUpload,  int proxyDownload,  int connections)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TrafficKeyStat() when $default != null:
+return $default(_that.key,_that.upload,_that.download,_that.proxyUpload,_that.proxyDownload,_that.connections);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String key,  int upload,  int download,  int proxyUpload,  int proxyDownload,  int connections)  $default,) {final _that = this;
+switch (_that) {
+case _TrafficKeyStat():
+return $default(_that.key,_that.upload,_that.download,_that.proxyUpload,_that.proxyDownload,_that.connections);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String key,  int upload,  int download,  int proxyUpload,  int proxyDownload,  int connections)?  $default,) {final _that = this;
+switch (_that) {
+case _TrafficKeyStat() when $default != null:
+return $default(_that.key,_that.upload,_that.download,_that.proxyUpload,_that.proxyDownload,_that.connections);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _TrafficKeyStat implements TrafficKeyStat {
+  const _TrafficKeyStat({this.key = '', this.upload = 0, this.download = 0, this.proxyUpload = 0, this.proxyDownload = 0, this.connections = 0});
+  factory _TrafficKeyStat.fromJson(Map<String, dynamic> json) => _$TrafficKeyStatFromJson(json);
+
+@override@JsonKey() final  String key;
+@override@JsonKey() final  int upload;
+@override@JsonKey() final  int download;
+@override@JsonKey() final  int proxyUpload;
+@override@JsonKey() final  int proxyDownload;
+@override@JsonKey() final  int connections;
+
+/// Create a copy of TrafficKeyStat
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TrafficKeyStatCopyWith<_TrafficKeyStat> get copyWith => __$TrafficKeyStatCopyWithImpl<_TrafficKeyStat>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$TrafficKeyStatToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrafficKeyStat&&(identical(other.key, key) || other.key == key)&&(identical(other.upload, upload) || other.upload == upload)&&(identical(other.download, download) || other.download == download)&&(identical(other.proxyUpload, proxyUpload) || other.proxyUpload == proxyUpload)&&(identical(other.proxyDownload, proxyDownload) || other.proxyDownload == proxyDownload)&&(identical(other.connections, connections) || other.connections == connections));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+    return Object.hash(runtimeType,key,upload,download,proxyUpload,proxyDownload,connections);
+}
+
+@override
+String toString() {
+    return 'TrafficKeyStat(key: $key, upload: $upload, download: $download, proxyUpload: $proxyUpload, proxyDownload: $proxyDownload, connections: $connections)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TrafficKeyStatCopyWith<$Res> implements $TrafficKeyStatCopyWith<$Res> {
+  factory _$TrafficKeyStatCopyWith(_TrafficKeyStat value, $Res Function(_TrafficKeyStat) _then) = __$TrafficKeyStatCopyWithImpl;
+@override @useResult
+$Res call({
+ String key, int upload, int download, int proxyUpload, int proxyDownload, int connections
+});
+
+
+
+
+}
+/// @nodoc
+class __$TrafficKeyStatCopyWithImpl<$Res>
+    implements _$TrafficKeyStatCopyWith<$Res> {
+  __$TrafficKeyStatCopyWithImpl(this._self, this._then);
+
+  final _TrafficKeyStat _self;
+  final $Res Function(_TrafficKeyStat) _then;
+
+/// Create a copy of TrafficKeyStat
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? key = null,Object? upload = null,Object? download = null,Object? proxyUpload = null,Object? proxyDownload = null,Object? connections = null,}) {
+  return _then(_TrafficKeyStat(
+key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
+as String,upload: null == upload ? _self.upload : upload // ignore: cast_nullable_to_non_nullable
+as int,download: null == download ? _self.download : download // ignore: cast_nullable_to_non_nullable
+as int,proxyUpload: null == proxyUpload ? _self.proxyUpload : proxyUpload // ignore: cast_nullable_to_non_nullable
+as int,proxyDownload: null == proxyDownload ? _self.proxyDownload : proxyDownload // ignore: cast_nullable_to_non_nullable
+as int,connections: null == connections ? _self.connections : connections // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$TrafficStats {
+
+ List<TrafficKeyStat> get process; List<TrafficKeyStat> get host;
+/// Create a copy of TrafficStats
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TrafficStatsCopyWith<TrafficStats> get copyWith => _$TrafficStatsCopyWithImpl<TrafficStats>(this as TrafficStats, _$identity);
+
+  /// Serializes this TrafficStats to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  final _this = this as TrafficStats;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrafficStats&&const DeepCollectionEquality().equals(other.process, _this.process)&&const DeepCollectionEquality().equals(other.host, _this.host));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+  final _this = this as TrafficStats;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.process),const DeepCollectionEquality().hash(_this.host));
+}
+
+@override
+String toString() {
+  final _this = this as TrafficStats;
+  return 'TrafficStats(process: ${_this.process}, host: ${_this.host})';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $TrafficStatsCopyWith<$Res>  {
+  factory $TrafficStatsCopyWith(TrafficStats value, $Res Function(TrafficStats) _then) = _$TrafficStatsCopyWithImpl;
+@useResult
+$Res call({
+ List<TrafficKeyStat> process, List<TrafficKeyStat> host
+});
+
+
+
+
+}
+/// @nodoc
+class _$TrafficStatsCopyWithImpl<$Res>
+    implements $TrafficStatsCopyWith<$Res> {
+  _$TrafficStatsCopyWithImpl(this._self, this._then);
+
+  final TrafficStats _self;
+  final $Res Function(TrafficStats) _then;
+
+/// Create a copy of TrafficStats
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? process = null,Object? host = null,}) {
+  return _then(TrafficStats(
+process: null == process ? _self.process : process // ignore: cast_nullable_to_non_nullable
+as List<TrafficKeyStat>,host: null == host ? _self.host : host // ignore: cast_nullable_to_non_nullable
+as List<TrafficKeyStat>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [TrafficStats].
+extension TrafficStatsPatterns on TrafficStats {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TrafficStats value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TrafficStats() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TrafficStats value)  $default,){
+final _that = this;
+switch (_that) {
+case _TrafficStats():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TrafficStats value)?  $default,){
+final _that = this;
+switch (_that) {
+case _TrafficStats() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<TrafficKeyStat> process,  List<TrafficKeyStat> host)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TrafficStats() when $default != null:
+return $default(_that.process,_that.host);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<TrafficKeyStat> process,  List<TrafficKeyStat> host)  $default,) {final _that = this;
+switch (_that) {
+case _TrafficStats():
+return $default(_that.process,_that.host);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<TrafficKeyStat> process,  List<TrafficKeyStat> host)?  $default,) {final _that = this;
+switch (_that) {
+case _TrafficStats() when $default != null:
+return $default(_that.process,_that.host);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _TrafficStats implements TrafficStats {
+  const _TrafficStats({ List<TrafficKeyStat> process = const [],  List<TrafficKeyStat> host = const []}): _process = process,_host = host;
+  factory _TrafficStats.fromJson(Map<String, dynamic> json) => _$TrafficStatsFromJson(json);
+
+ final  List<TrafficKeyStat> _process;
+@override@JsonKey() List<TrafficKeyStat> get process {
+  if (_process is EqualUnmodifiableListView) return _process;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_process);
+}
+
+ final  List<TrafficKeyStat> _host;
+@override@JsonKey() List<TrafficKeyStat> get host {
+  if (_host is EqualUnmodifiableListView) return _host;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_host);
+}
+
+
+/// Create a copy of TrafficStats
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TrafficStatsCopyWith<_TrafficStats> get copyWith => __$TrafficStatsCopyWithImpl<_TrafficStats>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$TrafficStatsToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrafficStats&&const DeepCollectionEquality().equals(other.process, _process)&&const DeepCollectionEquality().equals(other.host, _host));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_process),const DeepCollectionEquality().hash(_host));
+}
+
+@override
+String toString() {
+    return 'TrafficStats(process: $process, host: $host)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TrafficStatsCopyWith<$Res> implements $TrafficStatsCopyWith<$Res> {
+  factory _$TrafficStatsCopyWith(_TrafficStats value, $Res Function(_TrafficStats) _then) = __$TrafficStatsCopyWithImpl;
+@override @useResult
+$Res call({
+ List<TrafficKeyStat> process, List<TrafficKeyStat> host
+});
+
+
+
+
+}
+/// @nodoc
+class __$TrafficStatsCopyWithImpl<$Res>
+    implements _$TrafficStatsCopyWith<$Res> {
+  __$TrafficStatsCopyWithImpl(this._self, this._then);
+
+  final _TrafficStats _self;
+  final $Res Function(_TrafficStats) _then;
+
+/// Create a copy of TrafficStats
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? process = null,Object? host = null,}) {
+  return _then(_TrafficStats(
+process: null == process ? _self._process : process // ignore: cast_nullable_to_non_nullable
+as List<TrafficKeyStat>,host: null == host ? _self._host : host // ignore: cast_nullable_to_non_nullable
+as List<TrafficKeyStat>,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
 mixin _$Now {
 
  String get name; String get value;

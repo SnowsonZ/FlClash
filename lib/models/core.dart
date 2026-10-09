@@ -250,6 +250,32 @@ extension CoreMemoryStatsExt on CoreMemoryStats {
 }
 
 @freezed
+abstract class TrafficKeyStat with _$TrafficKeyStat {
+  const factory TrafficKeyStat({
+    @Default('') String key,
+    @Default(0) int upload,
+    @Default(0) int download,
+    @Default(0) int proxyUpload,
+    @Default(0) int proxyDownload,
+    @Default(0) int connections,
+  }) = _TrafficKeyStat;
+
+  factory TrafficKeyStat.fromJson(Map<String, Object?> json) =>
+      _$TrafficKeyStatFromJson(json);
+}
+
+@freezed
+abstract class TrafficStats with _$TrafficStats {
+  const factory TrafficStats({
+    @Default([]) List<TrafficKeyStat> process,
+    @Default([]) List<TrafficKeyStat> host,
+  }) = _TrafficStats;
+
+  factory TrafficStats.fromJson(Map<String, Object?> json) =>
+      _$TrafficStatsFromJson(json);
+}
+
+@freezed
 abstract class Now with _$Now {
   const factory Now({required String name, required String value}) = _Now;
 

@@ -252,6 +252,10 @@ enum InvokeMessageType { protect, process }
 
 enum FindProcessMode { always, off }
 
+enum TrafficStatsScope { process, host }
+
+enum TrafficStatsRange { today, week, all }
+
 enum InterfaceNameMode { clear, follow, custom }
 
 enum RestoreOption { all, onlyProfiles }
@@ -522,6 +526,7 @@ enum PageLabel {
   resources,
   connections,
   dns,
+  trafficStats,
 }
 
 enum RuleAction {

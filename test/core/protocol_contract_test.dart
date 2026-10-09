@@ -95,6 +95,19 @@ class _RecordingCoreHandler extends CoreHandlerInterface {
       },
       CoreMethod.changeProxy => {'message': '', 'changed': true},
       CoreMethod.getConnectionCount => 3,
+      CoreMethod.getTrafficStats => {
+        'process': [
+          {
+            'key': 'curl',
+            'upload': 12,
+            'download': 34,
+            'proxyUpload': 0,
+            'proxyDownload': 34,
+            'connections': 1,
+          },
+        ],
+        'host': [],
+      },
       CoreMethod.watchRoute => {
         'core-epoch': 1,
         'picks-version': 0,
@@ -147,6 +160,16 @@ class _EmptyConfigCoreHandler extends _RecordingCoreHandler {
 }
 
 void main() {
+  test('getTrafficStats decodes the per-key snapshot', () async {
+    final handler = _RecordingCoreHandler();
+    final stats = await handler.getTrafficStats();
+    expect(stats.process.single.key, 'curl');
+    expect(stats.process.single.proxyDownload, 34);
+    expect(stats.process.single.connections, 1);
+    expect(stats.host, isEmpty);
+    expect(handler.calls.containsKey(CoreMethod.getTrafficStats), isTrue);
+  });
+
   test('method call keeps structured arguments', () async {
     final fixture =
         json.decode(

@@ -150,9 +150,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m51(label) => "${label} must be a single item";
 
-  static String m52(label) => "${label} must be a URL";
+  static String m52(count) => "${count} connections";
 
-  static String m53(count) =>
+  static String m53(label) => "${label} must be a URL";
+
+  static String m54(count) =>
       "${Intl.plural(count, one: '1 year ago', other: '${count} years ago')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -299,6 +301,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "bind": MessageLookupByLibrary.simpleMessage("Bind"),
     "blacklistMode": MessageLookupByLibrary.simpleMessage("Blacklist mode"),
     "blockConnection": MessageLookupByLibrary.simpleMessage("Block connection"),
+    "byApp": MessageLookupByLibrary.simpleMessage("By app"),
+    "byService": MessageLookupByLibrary.simpleMessage("By service"),
     "bypassDomain": MessageLookupByLibrary.simpleMessage("Bypass domains"),
     "bypassDomainDesc": MessageLookupByLibrary.simpleMessage(
       "Only takes effect while the system proxy is enabled",
@@ -342,6 +346,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "clearData": MessageLookupByLibrary.simpleMessage("Clear data"),
     "clearSearch": MessageLookupByLibrary.simpleMessage("Clear search"),
+    "clearTrafficStats": MessageLookupByLibrary.simpleMessage("Clear stats"),
+    "clearTrafficStatsTip": MessageLookupByLibrary.simpleMessage(
+      "Clear all traffic statistics? This cannot be undone.",
+    ),
     "clipboardExport": MessageLookupByLibrary.simpleMessage(
       "Export to clipboard",
     ),
@@ -1093,6 +1101,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Duplicate proxy group name",
     ),
     "proxyNode": MessageLookupByLibrary.simpleMessage("Proxy node"),
+    "proxyOnly": MessageLookupByLibrary.simpleMessage("Proxy only"),
     "proxyProviders": MessageLookupByLibrary.simpleMessage("Proxy providers"),
     "proxyProvidersEmpty": MessageLookupByLibrary.simpleMessage(
       "Proxy providers are empty",
@@ -1452,6 +1461,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "total": MessageLookupByLibrary.simpleMessage("Total"),
     "totalTraffic": MessageLookupByLibrary.simpleMessage("Total traffic"),
     "tproxyPort": MessageLookupByLibrary.simpleMessage("TProxy port"),
+    "trafficStats": MessageLookupByLibrary.simpleMessage("Traffic stats"),
+    "trafficStatsAll": MessageLookupByLibrary.simpleMessage("All"),
+    "trafficStatsConnections": m52,
+    "trafficStatsToday": MessageLookupByLibrary.simpleMessage("Today"),
+    "trafficStatsWeek": MessageLookupByLibrary.simpleMessage("Last 7 days"),
     "trafficUsage": MessageLookupByLibrary.simpleMessage("Traffic usage"),
     "tun": MessageLookupByLibrary.simpleMessage("TUN"),
     "tunDesc": MessageLookupByLibrary.simpleMessage(
@@ -1474,7 +1488,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "urlDesc": MessageLookupByLibrary.simpleMessage(
       "Obtain a profile from a URL",
     ),
-    "urlTip": m52,
+    "urlTip": m53,
     "useHosts": MessageLookupByLibrary.simpleMessage("Use hosts"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage("Use system hosts"),
     "usedTraffic": MessageLookupByLibrary.simpleMessage("Used traffic"),
@@ -1499,7 +1513,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "Also set the system clock; Android ignores it",
     ),
-    "yearsAgo": m53,
+    "yearsAgo": m54,
     "yes": MessageLookupByLibrary.simpleMessage("Yes"),
     "zhCN": MessageLookupByLibrary.simpleMessage("Simplified Chinese"),
   };

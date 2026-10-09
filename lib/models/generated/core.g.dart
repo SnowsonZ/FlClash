@@ -393,6 +393,43 @@ Map<String, dynamic> _$CoreMemoryStatsToJson(_CoreMemoryStats instance) =>
       'runtimeOther': instance.runtimeOther,
     };
 
+_TrafficKeyStat _$TrafficKeyStatFromJson(Map<String, dynamic> json) =>
+    _TrafficKeyStat(
+      key: json['key'] as String? ?? '',
+      upload: (json['upload'] as num?)?.toInt() ?? 0,
+      download: (json['download'] as num?)?.toInt() ?? 0,
+      proxyUpload: (json['proxyUpload'] as num?)?.toInt() ?? 0,
+      proxyDownload: (json['proxyDownload'] as num?)?.toInt() ?? 0,
+      connections: (json['connections'] as num?)?.toInt() ?? 0,
+    );
+
+Map<String, dynamic> _$TrafficKeyStatToJson(_TrafficKeyStat instance) =>
+    <String, dynamic>{
+      'key': instance.key,
+      'upload': instance.upload,
+      'download': instance.download,
+      'proxyUpload': instance.proxyUpload,
+      'proxyDownload': instance.proxyDownload,
+      'connections': instance.connections,
+    };
+
+_TrafficStats _$TrafficStatsFromJson(Map<String, dynamic> json) =>
+    _TrafficStats(
+      process:
+          (json['process'] as List<dynamic>?)
+              ?.map((e) => TrafficKeyStat.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      host:
+          (json['host'] as List<dynamic>?)
+              ?.map((e) => TrafficKeyStat.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+    );
+
+Map<String, dynamic> _$TrafficStatsToJson(_TrafficStats instance) =>
+    <String, dynamic>{'process': instance.process, 'host': instance.host};
+
 _Now _$NowFromJson(Map<String, dynamic> json) =>
     _Now(name: json['name'] as String, value: json['value'] as String);
 

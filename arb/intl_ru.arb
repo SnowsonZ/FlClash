@@ -777,5 +777,15 @@
   "large": "Крупный",
   "extraLarge": "Очень крупный",
   "switchProfile": "Сменить профиль",
-  "lastUpdated": "Последнее обновление"
+  "lastUpdated": "Последнее обновление",
+  "trafficStats": "Статистика трафика",
+  "byApp": "По приложениям",
+  "byService": "По сервисам",
+  "trafficStatsToday": "Сегодня",
+  "trafficStatsWeek": "За 7 дней",
+  "trafficStatsAll": "Всё время",
+  "proxyOnly": "Только прокси",
+  "clearTrafficStats": "Очистить статистику",
+  "clearTrafficStatsTip": "Очистить всю статистику трафика? Действие нельзя отменить.",
+  "trafficStatsConnections": "Подключений: {count}"
 }

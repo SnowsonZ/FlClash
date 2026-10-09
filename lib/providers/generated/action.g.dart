@@ -678,3 +678,56 @@ abstract class _$UpdatingAction extends $Notifier<void> {
     return element.handleCreate(ref, build);
   }
 }
+
+@ProviderFor(TrafficStatsAction)
+final trafficStatsActionProvider = TrafficStatsActionProvider._();
+
+final class TrafficStatsActionProvider
+    extends $NotifierProvider<TrafficStatsAction, void> {
+  TrafficStatsActionProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'trafficStatsActionProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$trafficStatsActionHash();
+
+  @$internal
+  @override
+  TrafficStatsAction create() => TrafficStatsAction();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(void value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<void>(value),
+    );
+  }
+}
+
+String _$trafficStatsActionHash() =>
+    r'2a27dc9970193fb8481ef1e6a37227abb539e0c0';
+
+abstract class _$TrafficStatsAction extends $Notifier<void> {
+  void build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<void, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<void, void>,
+              void,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

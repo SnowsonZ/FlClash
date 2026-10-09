@@ -288,6 +288,10 @@ func handleResetTraffic() {
 	statistic.DefaultManager.ResetStatistic()
 }
 
+func handleGetTrafficStats() *statistic.TrafficKeyStats {
+	return statistic.DefaultManager.SnapshotKeyStats()
+}
+
 func delayValue(delay uint16) int32 {
 	if delay == 0 {
 		return -1

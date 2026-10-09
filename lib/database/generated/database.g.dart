@@ -4404,6 +4404,794 @@ class CustomProxiesCompanion extends UpdateCompanion<RawCustomProxy> {
   }
 }
 
+class $TrafficStatRecordsTable extends TrafficStatRecords
+    with TableInfo<$TrafficStatRecordsTable, TrafficStatRecord> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TrafficStatRecordsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<String> date = GeneratedColumn<String>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TrafficStatsScope, String> scope =
+      GeneratedColumn<String>(
+        'scope',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<TrafficStatsScope>(
+        $TrafficStatRecordsTable.$converterscope,
+      );
+  static const VerificationMeta _keyMeta = const VerificationMeta('key');
+  @override
+  late final GeneratedColumn<String> key = GeneratedColumn<String>(
+    'key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _uploadMeta = const VerificationMeta('upload');
+  @override
+  late final GeneratedColumn<int> upload = GeneratedColumn<int>(
+    'upload',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _downloadMeta = const VerificationMeta(
+    'download',
+  );
+  @override
+  late final GeneratedColumn<int> download = GeneratedColumn<int>(
+    'download',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _proxyUploadMeta = const VerificationMeta(
+    'proxyUpload',
+  );
+  @override
+  late final GeneratedColumn<int> proxyUpload = GeneratedColumn<int>(
+    'proxy_upload',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _proxyDownloadMeta = const VerificationMeta(
+    'proxyDownload',
+  );
+  @override
+  late final GeneratedColumn<int> proxyDownload = GeneratedColumn<int>(
+    'proxy_download',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _connectionsMeta = const VerificationMeta(
+    'connections',
+  );
+  @override
+  late final GeneratedColumn<int> connections = GeneratedColumn<int>(
+    'connections',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _lastCoreUploadMeta = const VerificationMeta(
+    'lastCoreUpload',
+  );
+  @override
+  late final GeneratedColumn<int> lastCoreUpload = GeneratedColumn<int>(
+    'last_core_upload',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _lastCoreDownloadMeta = const VerificationMeta(
+    'lastCoreDownload',
+  );
+  @override
+  late final GeneratedColumn<int> lastCoreDownload = GeneratedColumn<int>(
+    'last_core_download',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _lastCoreProxyUploadMeta =
+      const VerificationMeta('lastCoreProxyUpload');
+  @override
+  late final GeneratedColumn<int> lastCoreProxyUpload = GeneratedColumn<int>(
+    'last_core_proxy_upload',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _lastCoreProxyDownloadMeta =
+      const VerificationMeta('lastCoreProxyDownload');
+  @override
+  late final GeneratedColumn<int> lastCoreProxyDownload = GeneratedColumn<int>(
+    'last_core_proxy_download',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _lastCoreConnectionsMeta =
+      const VerificationMeta('lastCoreConnections');
+  @override
+  late final GeneratedColumn<int> lastCoreConnections = GeneratedColumn<int>(
+    'last_core_connections',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    date,
+    scope,
+    key,
+    upload,
+    download,
+    proxyUpload,
+    proxyDownload,
+    connections,
+    lastCoreUpload,
+    lastCoreDownload,
+    lastCoreProxyUpload,
+    lastCoreProxyDownload,
+    lastCoreConnections,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'traffic_stats';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TrafficStatRecord> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('key')) {
+      context.handle(
+        _keyMeta,
+        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_keyMeta);
+    }
+    if (data.containsKey('upload')) {
+      context.handle(
+        _uploadMeta,
+        upload.isAcceptableOrUnknown(data['upload']!, _uploadMeta),
+      );
+    }
+    if (data.containsKey('download')) {
+      context.handle(
+        _downloadMeta,
+        download.isAcceptableOrUnknown(data['download']!, _downloadMeta),
+      );
+    }
+    if (data.containsKey('proxy_upload')) {
+      context.handle(
+        _proxyUploadMeta,
+        proxyUpload.isAcceptableOrUnknown(
+          data['proxy_upload']!,
+          _proxyUploadMeta,
+        ),
+      );
+    }
+    if (data.containsKey('proxy_download')) {
+      context.handle(
+        _proxyDownloadMeta,
+        proxyDownload.isAcceptableOrUnknown(
+          data['proxy_download']!,
+          _proxyDownloadMeta,
+        ),
+      );
+    }
+    if (data.containsKey('connections')) {
+      context.handle(
+        _connectionsMeta,
+        connections.isAcceptableOrUnknown(
+          data['connections']!,
+          _connectionsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_core_upload')) {
+      context.handle(
+        _lastCoreUploadMeta,
+        lastCoreUpload.isAcceptableOrUnknown(
+          data['last_core_upload']!,
+          _lastCoreUploadMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_core_download')) {
+      context.handle(
+        _lastCoreDownloadMeta,
+        lastCoreDownload.isAcceptableOrUnknown(
+          data['last_core_download']!,
+          _lastCoreDownloadMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_core_proxy_upload')) {
+      context.handle(
+        _lastCoreProxyUploadMeta,
+        lastCoreProxyUpload.isAcceptableOrUnknown(
+          data['last_core_proxy_upload']!,
+          _lastCoreProxyUploadMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_core_proxy_download')) {
+      context.handle(
+        _lastCoreProxyDownloadMeta,
+        lastCoreProxyDownload.isAcceptableOrUnknown(
+          data['last_core_proxy_download']!,
+          _lastCoreProxyDownloadMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_core_connections')) {
+      context.handle(
+        _lastCoreConnectionsMeta,
+        lastCoreConnections.isAcceptableOrUnknown(
+          data['last_core_connections']!,
+          _lastCoreConnectionsMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {date, scope, key};
+  @override
+  TrafficStatRecord map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TrafficStatRecord(
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}date'],
+      )!,
+      scope: $TrafficStatRecordsTable.$converterscope.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}scope'],
+        )!,
+      ),
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      upload: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}upload'],
+      )!,
+      download: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}download'],
+      )!,
+      proxyUpload: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}proxy_upload'],
+      )!,
+      proxyDownload: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}proxy_download'],
+      )!,
+      connections: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}connections'],
+      )!,
+      lastCoreUpload: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_core_upload'],
+      )!,
+      lastCoreDownload: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_core_download'],
+      )!,
+      lastCoreProxyUpload: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_core_proxy_upload'],
+      )!,
+      lastCoreProxyDownload: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_core_proxy_download'],
+      )!,
+      lastCoreConnections: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_core_connections'],
+      )!,
+    );
+  }
+
+  @override
+  $TrafficStatRecordsTable createAlias(String alias) {
+    return $TrafficStatRecordsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<TrafficStatsScope, String, String> $converterscope =
+      const EnumNameConverter<TrafficStatsScope>(TrafficStatsScope.values);
+}
+
+class TrafficStatRecord extends DataClass
+    implements Insertable<TrafficStatRecord> {
+  final String date;
+  final TrafficStatsScope scope;
+  final String key;
+  final int upload;
+  final int download;
+  final int proxyUpload;
+  final int proxyDownload;
+  final int connections;
+  final int lastCoreUpload;
+  final int lastCoreDownload;
+  final int lastCoreProxyUpload;
+  final int lastCoreProxyDownload;
+  final int lastCoreConnections;
+  const TrafficStatRecord({
+    required this.date,
+    required this.scope,
+    required this.key,
+    required this.upload,
+    required this.download,
+    required this.proxyUpload,
+    required this.proxyDownload,
+    required this.connections,
+    required this.lastCoreUpload,
+    required this.lastCoreDownload,
+    required this.lastCoreProxyUpload,
+    required this.lastCoreProxyDownload,
+    required this.lastCoreConnections,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['date'] = Variable<String>(date);
+    {
+      map['scope'] = Variable<String>(
+        $TrafficStatRecordsTable.$converterscope.toSql(scope),
+      );
+    }
+    map['key'] = Variable<String>(key);
+    map['upload'] = Variable<int>(upload);
+    map['download'] = Variable<int>(download);
+    map['proxy_upload'] = Variable<int>(proxyUpload);
+    map['proxy_download'] = Variable<int>(proxyDownload);
+    map['connections'] = Variable<int>(connections);
+    map['last_core_upload'] = Variable<int>(lastCoreUpload);
+    map['last_core_download'] = Variable<int>(lastCoreDownload);
+    map['last_core_proxy_upload'] = Variable<int>(lastCoreProxyUpload);
+    map['last_core_proxy_download'] = Variable<int>(lastCoreProxyDownload);
+    map['last_core_connections'] = Variable<int>(lastCoreConnections);
+    return map;
+  }
+
+  TrafficStatRecordsCompanion toCompanion(bool nullToAbsent) {
+    return TrafficStatRecordsCompanion(
+      date: Value(date),
+      scope: Value(scope),
+      key: Value(key),
+      upload: Value(upload),
+      download: Value(download),
+      proxyUpload: Value(proxyUpload),
+      proxyDownload: Value(proxyDownload),
+      connections: Value(connections),
+      lastCoreUpload: Value(lastCoreUpload),
+      lastCoreDownload: Value(lastCoreDownload),
+      lastCoreProxyUpload: Value(lastCoreProxyUpload),
+      lastCoreProxyDownload: Value(lastCoreProxyDownload),
+      lastCoreConnections: Value(lastCoreConnections),
+    );
+  }
+
+  factory TrafficStatRecord.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TrafficStatRecord(
+      date: serializer.fromJson<String>(json['date']),
+      scope: $TrafficStatRecordsTable.$converterscope.fromJson(
+        serializer.fromJson<String>(json['scope']),
+      ),
+      key: serializer.fromJson<String>(json['key']),
+      upload: serializer.fromJson<int>(json['upload']),
+      download: serializer.fromJson<int>(json['download']),
+      proxyUpload: serializer.fromJson<int>(json['proxyUpload']),
+      proxyDownload: serializer.fromJson<int>(json['proxyDownload']),
+      connections: serializer.fromJson<int>(json['connections']),
+      lastCoreUpload: serializer.fromJson<int>(json['lastCoreUpload']),
+      lastCoreDownload: serializer.fromJson<int>(json['lastCoreDownload']),
+      lastCoreProxyUpload: serializer.fromJson<int>(
+        json['lastCoreProxyUpload'],
+      ),
+      lastCoreProxyDownload: serializer.fromJson<int>(
+        json['lastCoreProxyDownload'],
+      ),
+      lastCoreConnections: serializer.fromJson<int>(
+        json['lastCoreConnections'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'date': serializer.toJson<String>(date),
+      'scope': serializer.toJson<String>(
+        $TrafficStatRecordsTable.$converterscope.toJson(scope),
+      ),
+      'key': serializer.toJson<String>(key),
+      'upload': serializer.toJson<int>(upload),
+      'download': serializer.toJson<int>(download),
+      'proxyUpload': serializer.toJson<int>(proxyUpload),
+      'proxyDownload': serializer.toJson<int>(proxyDownload),
+      'connections': serializer.toJson<int>(connections),
+      'lastCoreUpload': serializer.toJson<int>(lastCoreUpload),
+      'lastCoreDownload': serializer.toJson<int>(lastCoreDownload),
+      'lastCoreProxyUpload': serializer.toJson<int>(lastCoreProxyUpload),
+      'lastCoreProxyDownload': serializer.toJson<int>(lastCoreProxyDownload),
+      'lastCoreConnections': serializer.toJson<int>(lastCoreConnections),
+    };
+  }
+
+  TrafficStatRecord copyWith({
+    String? date,
+    TrafficStatsScope? scope,
+    String? key,
+    int? upload,
+    int? download,
+    int? proxyUpload,
+    int? proxyDownload,
+    int? connections,
+    int? lastCoreUpload,
+    int? lastCoreDownload,
+    int? lastCoreProxyUpload,
+    int? lastCoreProxyDownload,
+    int? lastCoreConnections,
+  }) => TrafficStatRecord(
+    date: date ?? this.date,
+    scope: scope ?? this.scope,
+    key: key ?? this.key,
+    upload: upload ?? this.upload,
+    download: download ?? this.download,
+    proxyUpload: proxyUpload ?? this.proxyUpload,
+    proxyDownload: proxyDownload ?? this.proxyDownload,
+    connections: connections ?? this.connections,
+    lastCoreUpload: lastCoreUpload ?? this.lastCoreUpload,
+    lastCoreDownload: lastCoreDownload ?? this.lastCoreDownload,
+    lastCoreProxyUpload: lastCoreProxyUpload ?? this.lastCoreProxyUpload,
+    lastCoreProxyDownload: lastCoreProxyDownload ?? this.lastCoreProxyDownload,
+    lastCoreConnections: lastCoreConnections ?? this.lastCoreConnections,
+  );
+  TrafficStatRecord copyWithCompanion(TrafficStatRecordsCompanion data) {
+    return TrafficStatRecord(
+      date: data.date.present ? data.date.value : this.date,
+      scope: data.scope.present ? data.scope.value : this.scope,
+      key: data.key.present ? data.key.value : this.key,
+      upload: data.upload.present ? data.upload.value : this.upload,
+      download: data.download.present ? data.download.value : this.download,
+      proxyUpload: data.proxyUpload.present
+          ? data.proxyUpload.value
+          : this.proxyUpload,
+      proxyDownload: data.proxyDownload.present
+          ? data.proxyDownload.value
+          : this.proxyDownload,
+      connections: data.connections.present
+          ? data.connections.value
+          : this.connections,
+      lastCoreUpload: data.lastCoreUpload.present
+          ? data.lastCoreUpload.value
+          : this.lastCoreUpload,
+      lastCoreDownload: data.lastCoreDownload.present
+          ? data.lastCoreDownload.value
+          : this.lastCoreDownload,
+      lastCoreProxyUpload: data.lastCoreProxyUpload.present
+          ? data.lastCoreProxyUpload.value
+          : this.lastCoreProxyUpload,
+      lastCoreProxyDownload: data.lastCoreProxyDownload.present
+          ? data.lastCoreProxyDownload.value
+          : this.lastCoreProxyDownload,
+      lastCoreConnections: data.lastCoreConnections.present
+          ? data.lastCoreConnections.value
+          : this.lastCoreConnections,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TrafficStatRecord(')
+          ..write('date: $date, ')
+          ..write('scope: $scope, ')
+          ..write('key: $key, ')
+          ..write('upload: $upload, ')
+          ..write('download: $download, ')
+          ..write('proxyUpload: $proxyUpload, ')
+          ..write('proxyDownload: $proxyDownload, ')
+          ..write('connections: $connections, ')
+          ..write('lastCoreUpload: $lastCoreUpload, ')
+          ..write('lastCoreDownload: $lastCoreDownload, ')
+          ..write('lastCoreProxyUpload: $lastCoreProxyUpload, ')
+          ..write('lastCoreProxyDownload: $lastCoreProxyDownload, ')
+          ..write('lastCoreConnections: $lastCoreConnections')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    date,
+    scope,
+    key,
+    upload,
+    download,
+    proxyUpload,
+    proxyDownload,
+    connections,
+    lastCoreUpload,
+    lastCoreDownload,
+    lastCoreProxyUpload,
+    lastCoreProxyDownload,
+    lastCoreConnections,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TrafficStatRecord &&
+          other.date == this.date &&
+          other.scope == this.scope &&
+          other.key == this.key &&
+          other.upload == this.upload &&
+          other.download == this.download &&
+          other.proxyUpload == this.proxyUpload &&
+          other.proxyDownload == this.proxyDownload &&
+          other.connections == this.connections &&
+          other.lastCoreUpload == this.lastCoreUpload &&
+          other.lastCoreDownload == this.lastCoreDownload &&
+          other.lastCoreProxyUpload == this.lastCoreProxyUpload &&
+          other.lastCoreProxyDownload == this.lastCoreProxyDownload &&
+          other.lastCoreConnections == this.lastCoreConnections);
+}
+
+class TrafficStatRecordsCompanion extends UpdateCompanion<TrafficStatRecord> {
+  final Value<String> date;
+  final Value<TrafficStatsScope> scope;
+  final Value<String> key;
+  final Value<int> upload;
+  final Value<int> download;
+  final Value<int> proxyUpload;
+  final Value<int> proxyDownload;
+  final Value<int> connections;
+  final Value<int> lastCoreUpload;
+  final Value<int> lastCoreDownload;
+  final Value<int> lastCoreProxyUpload;
+  final Value<int> lastCoreProxyDownload;
+  final Value<int> lastCoreConnections;
+  final Value<int> rowid;
+  const TrafficStatRecordsCompanion({
+    this.date = const Value.absent(),
+    this.scope = const Value.absent(),
+    this.key = const Value.absent(),
+    this.upload = const Value.absent(),
+    this.download = const Value.absent(),
+    this.proxyUpload = const Value.absent(),
+    this.proxyDownload = const Value.absent(),
+    this.connections = const Value.absent(),
+    this.lastCoreUpload = const Value.absent(),
+    this.lastCoreDownload = const Value.absent(),
+    this.lastCoreProxyUpload = const Value.absent(),
+    this.lastCoreProxyDownload = const Value.absent(),
+    this.lastCoreConnections = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TrafficStatRecordsCompanion.insert({
+    required String date,
+    required TrafficStatsScope scope,
+    required String key,
+    this.upload = const Value.absent(),
+    this.download = const Value.absent(),
+    this.proxyUpload = const Value.absent(),
+    this.proxyDownload = const Value.absent(),
+    this.connections = const Value.absent(),
+    this.lastCoreUpload = const Value.absent(),
+    this.lastCoreDownload = const Value.absent(),
+    this.lastCoreProxyUpload = const Value.absent(),
+    this.lastCoreProxyDownload = const Value.absent(),
+    this.lastCoreConnections = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : date = Value(date),
+       scope = Value(scope),
+       key = Value(key);
+  static Insertable<TrafficStatRecord> custom({
+    Expression<String>? date,
+    Expression<String>? scope,
+    Expression<String>? key,
+    Expression<int>? upload,
+    Expression<int>? download,
+    Expression<int>? proxyUpload,
+    Expression<int>? proxyDownload,
+    Expression<int>? connections,
+    Expression<int>? lastCoreUpload,
+    Expression<int>? lastCoreDownload,
+    Expression<int>? lastCoreProxyUpload,
+    Expression<int>? lastCoreProxyDownload,
+    Expression<int>? lastCoreConnections,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (date != null) 'date': date,
+      if (scope != null) 'scope': scope,
+      if (key != null) 'key': key,
+      if (upload != null) 'upload': upload,
+      if (download != null) 'download': download,
+      if (proxyUpload != null) 'proxy_upload': proxyUpload,
+      if (proxyDownload != null) 'proxy_download': proxyDownload,
+      if (connections != null) 'connections': connections,
+      if (lastCoreUpload != null) 'last_core_upload': lastCoreUpload,
+      if (lastCoreDownload != null) 'last_core_download': lastCoreDownload,
+      if (lastCoreProxyUpload != null)
+        'last_core_proxy_upload': lastCoreProxyUpload,
+      if (lastCoreProxyDownload != null)
+        'last_core_proxy_download': lastCoreProxyDownload,
+      if (lastCoreConnections != null)
+        'last_core_connections': lastCoreConnections,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TrafficStatRecordsCompanion copyWith({
+    Value<String>? date,
+    Value<TrafficStatsScope>? scope,
+    Value<String>? key,
+    Value<int>? upload,
+    Value<int>? download,
+    Value<int>? proxyUpload,
+    Value<int>? proxyDownload,
+    Value<int>? connections,
+    Value<int>? lastCoreUpload,
+    Value<int>? lastCoreDownload,
+    Value<int>? lastCoreProxyUpload,
+    Value<int>? lastCoreProxyDownload,
+    Value<int>? lastCoreConnections,
+    Value<int>? rowid,
+  }) {
+    return TrafficStatRecordsCompanion(
+      date: date ?? this.date,
+      scope: scope ?? this.scope,
+      key: key ?? this.key,
+      upload: upload ?? this.upload,
+      download: download ?? this.download,
+      proxyUpload: proxyUpload ?? this.proxyUpload,
+      proxyDownload: proxyDownload ?? this.proxyDownload,
+      connections: connections ?? this.connections,
+      lastCoreUpload: lastCoreUpload ?? this.lastCoreUpload,
+      lastCoreDownload: lastCoreDownload ?? this.lastCoreDownload,
+      lastCoreProxyUpload: lastCoreProxyUpload ?? this.lastCoreProxyUpload,
+      lastCoreProxyDownload:
+          lastCoreProxyDownload ?? this.lastCoreProxyDownload,
+      lastCoreConnections: lastCoreConnections ?? this.lastCoreConnections,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (date.present) {
+      map['date'] = Variable<String>(date.value);
+    }
+    if (scope.present) {
+      map['scope'] = Variable<String>(
+        $TrafficStatRecordsTable.$converterscope.toSql(scope.value),
+      );
+    }
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (upload.present) {
+      map['upload'] = Variable<int>(upload.value);
+    }
+    if (download.present) {
+      map['download'] = Variable<int>(download.value);
+    }
+    if (proxyUpload.present) {
+      map['proxy_upload'] = Variable<int>(proxyUpload.value);
+    }
+    if (proxyDownload.present) {
+      map['proxy_download'] = Variable<int>(proxyDownload.value);
+    }
+    if (connections.present) {
+      map['connections'] = Variable<int>(connections.value);
+    }
+    if (lastCoreUpload.present) {
+      map['last_core_upload'] = Variable<int>(lastCoreUpload.value);
+    }
+    if (lastCoreDownload.present) {
+      map['last_core_download'] = Variable<int>(lastCoreDownload.value);
+    }
+    if (lastCoreProxyUpload.present) {
+      map['last_core_proxy_upload'] = Variable<int>(lastCoreProxyUpload.value);
+    }
+    if (lastCoreProxyDownload.present) {
+      map['last_core_proxy_download'] = Variable<int>(
+        lastCoreProxyDownload.value,
+      );
+    }
+    if (lastCoreConnections.present) {
+      map['last_core_connections'] = Variable<int>(lastCoreConnections.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TrafficStatRecordsCompanion(')
+          ..write('date: $date, ')
+          ..write('scope: $scope, ')
+          ..write('key: $key, ')
+          ..write('upload: $upload, ')
+          ..write('download: $download, ')
+          ..write('proxyUpload: $proxyUpload, ')
+          ..write('proxyDownload: $proxyDownload, ')
+          ..write('connections: $connections, ')
+          ..write('lastCoreUpload: $lastCoreUpload, ')
+          ..write('lastCoreDownload: $lastCoreDownload, ')
+          ..write('lastCoreProxyUpload: $lastCoreProxyUpload, ')
+          ..write('lastCoreProxyDownload: $lastCoreProxyDownload, ')
+          ..write('lastCoreConnections: $lastCoreConnections, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
   $DatabaseManager get managers => $DatabaseManager(this);
@@ -4417,6 +5205,8 @@ abstract class _$Database extends GeneratedDatabase {
   late final $IconRecordsTable iconRecords = $IconRecordsTable(this);
   late final $ClashProvidersTable clashProviders = $ClashProvidersTable(this);
   late final $CustomProxiesTable customProxies = $CustomProxiesTable(this);
+  late final $TrafficStatRecordsTable trafficStatRecords =
+      $TrafficStatRecordsTable(this);
   late final Index idxRuleTarget = Index(
     'idx_rule_target',
     'CREATE INDEX idx_rule_target ON rules (rule_target)',
@@ -4448,6 +5238,9 @@ abstract class _$Database extends GeneratedDatabase {
   late final CustomProxiesDao customProxiesDao = CustomProxiesDao(
     this as Database,
   );
+  late final TrafficStatsDao trafficStatsDao = TrafficStatsDao(
+    this as Database,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -4461,6 +5254,7 @@ abstract class _$Database extends GeneratedDatabase {
     iconRecords,
     clashProviders,
     customProxies,
+    trafficStatRecords,
     idxRuleTarget,
     idxProfileSceneOrder,
     idxProfileNameOrder,
@@ -7536,6 +8330,384 @@ typedef $$CustomProxiesTableProcessedTableManager =
       RawCustomProxy,
       PrefetchHooks Function({bool profileId})
     >;
+typedef $$TrafficStatRecordsTableCreateCompanionBuilder =
+    TrafficStatRecordsCompanion Function({
+      required String date,
+      required TrafficStatsScope scope,
+      required String key,
+      Value<int> upload,
+      Value<int> download,
+      Value<int> proxyUpload,
+      Value<int> proxyDownload,
+      Value<int> connections,
+      Value<int> lastCoreUpload,
+      Value<int> lastCoreDownload,
+      Value<int> lastCoreProxyUpload,
+      Value<int> lastCoreProxyDownload,
+      Value<int> lastCoreConnections,
+      Value<int> rowid,
+    });
+typedef $$TrafficStatRecordsTableUpdateCompanionBuilder =
+    TrafficStatRecordsCompanion Function({
+      Value<String> date,
+      Value<TrafficStatsScope> scope,
+      Value<String> key,
+      Value<int> upload,
+      Value<int> download,
+      Value<int> proxyUpload,
+      Value<int> proxyDownload,
+      Value<int> connections,
+      Value<int> lastCoreUpload,
+      Value<int> lastCoreDownload,
+      Value<int> lastCoreProxyUpload,
+      Value<int> lastCoreProxyDownload,
+      Value<int> lastCoreConnections,
+      Value<int> rowid,
+    });
+
+class $$TrafficStatRecordsTableFilterComposer
+    extends Composer<_$Database, $TrafficStatRecordsTable> {
+  $$TrafficStatRecordsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TrafficStatsScope, TrafficStatsScope, String>
+  get scope => $composableBuilder(
+    column: $table.scope,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get upload => $composableBuilder(
+    column: $table.upload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get download => $composableBuilder(
+    column: $table.download,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get proxyUpload => $composableBuilder(
+    column: $table.proxyUpload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get proxyDownload => $composableBuilder(
+    column: $table.proxyDownload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get connections => $composableBuilder(
+    column: $table.connections,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastCoreUpload => $composableBuilder(
+    column: $table.lastCoreUpload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastCoreDownload => $composableBuilder(
+    column: $table.lastCoreDownload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastCoreProxyUpload => $composableBuilder(
+    column: $table.lastCoreProxyUpload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastCoreProxyDownload => $composableBuilder(
+    column: $table.lastCoreProxyDownload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastCoreConnections => $composableBuilder(
+    column: $table.lastCoreConnections,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TrafficStatRecordsTableOrderingComposer
+    extends Composer<_$Database, $TrafficStatRecordsTable> {
+  $$TrafficStatRecordsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get scope => $composableBuilder(
+    column: $table.scope,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get upload => $composableBuilder(
+    column: $table.upload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get download => $composableBuilder(
+    column: $table.download,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get proxyUpload => $composableBuilder(
+    column: $table.proxyUpload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get proxyDownload => $composableBuilder(
+    column: $table.proxyDownload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get connections => $composableBuilder(
+    column: $table.connections,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastCoreUpload => $composableBuilder(
+    column: $table.lastCoreUpload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastCoreDownload => $composableBuilder(
+    column: $table.lastCoreDownload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastCoreProxyUpload => $composableBuilder(
+    column: $table.lastCoreProxyUpload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastCoreProxyDownload => $composableBuilder(
+    column: $table.lastCoreProxyDownload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastCoreConnections => $composableBuilder(
+    column: $table.lastCoreConnections,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TrafficStatRecordsTableAnnotationComposer
+    extends Composer<_$Database, $TrafficStatRecordsTable> {
+  $$TrafficStatRecordsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<TrafficStatsScope, String> get scope =>
+      $composableBuilder(column: $table.scope, builder: (column) => column);
+
+  GeneratedColumn<String> get key =>
+      $composableBuilder(column: $table.key, builder: (column) => column);
+
+  GeneratedColumn<int> get upload =>
+      $composableBuilder(column: $table.upload, builder: (column) => column);
+
+  GeneratedColumn<int> get download =>
+      $composableBuilder(column: $table.download, builder: (column) => column);
+
+  GeneratedColumn<int> get proxyUpload => $composableBuilder(
+    column: $table.proxyUpload,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get proxyDownload => $composableBuilder(
+    column: $table.proxyDownload,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get connections => $composableBuilder(
+    column: $table.connections,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lastCoreUpload => $composableBuilder(
+    column: $table.lastCoreUpload,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lastCoreDownload => $composableBuilder(
+    column: $table.lastCoreDownload,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lastCoreProxyUpload => $composableBuilder(
+    column: $table.lastCoreProxyUpload,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lastCoreProxyDownload => $composableBuilder(
+    column: $table.lastCoreProxyDownload,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lastCoreConnections => $composableBuilder(
+    column: $table.lastCoreConnections,
+    builder: (column) => column,
+  );
+}
+
+class $$TrafficStatRecordsTableTableManager
+    extends
+        RootTableManager<
+          _$Database,
+          $TrafficStatRecordsTable,
+          TrafficStatRecord,
+          $$TrafficStatRecordsTableFilterComposer,
+          $$TrafficStatRecordsTableOrderingComposer,
+          $$TrafficStatRecordsTableAnnotationComposer,
+          $$TrafficStatRecordsTableCreateCompanionBuilder,
+          $$TrafficStatRecordsTableUpdateCompanionBuilder,
+          (
+            TrafficStatRecord,
+            BaseReferences<
+              _$Database,
+              $TrafficStatRecordsTable,
+              TrafficStatRecord
+            >,
+          ),
+          TrafficStatRecord,
+          PrefetchHooks Function()
+        > {
+  $$TrafficStatRecordsTableTableManager(
+    _$Database db,
+    $TrafficStatRecordsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TrafficStatRecordsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TrafficStatRecordsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TrafficStatRecordsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> date = const Value.absent(),
+                Value<TrafficStatsScope> scope = const Value.absent(),
+                Value<String> key = const Value.absent(),
+                Value<int> upload = const Value.absent(),
+                Value<int> download = const Value.absent(),
+                Value<int> proxyUpload = const Value.absent(),
+                Value<int> proxyDownload = const Value.absent(),
+                Value<int> connections = const Value.absent(),
+                Value<int> lastCoreUpload = const Value.absent(),
+                Value<int> lastCoreDownload = const Value.absent(),
+                Value<int> lastCoreProxyUpload = const Value.absent(),
+                Value<int> lastCoreProxyDownload = const Value.absent(),
+                Value<int> lastCoreConnections = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TrafficStatRecordsCompanion(
+                date: date,
+                scope: scope,
+                key: key,
+                upload: upload,
+                download: download,
+                proxyUpload: proxyUpload,
+                proxyDownload: proxyDownload,
+                connections: connections,
+                lastCoreUpload: lastCoreUpload,
+                lastCoreDownload: lastCoreDownload,
+                lastCoreProxyUpload: lastCoreProxyUpload,
+                lastCoreProxyDownload: lastCoreProxyDownload,
+                lastCoreConnections: lastCoreConnections,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String date,
+                required TrafficStatsScope scope,
+                required String key,
+                Value<int> upload = const Value.absent(),
+                Value<int> download = const Value.absent(),
+                Value<int> proxyUpload = const Value.absent(),
+                Value<int> proxyDownload = const Value.absent(),
+                Value<int> connections = const Value.absent(),
+                Value<int> lastCoreUpload = const Value.absent(),
+                Value<int> lastCoreDownload = const Value.absent(),
+                Value<int> lastCoreProxyUpload = const Value.absent(),
+                Value<int> lastCoreProxyDownload = const Value.absent(),
+                Value<int> lastCoreConnections = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TrafficStatRecordsCompanion.insert(
+                date: date,
+                scope: scope,
+                key: key,
+                upload: upload,
+                download: download,
+                proxyUpload: proxyUpload,
+                proxyDownload: proxyDownload,
+                connections: connections,
+                lastCoreUpload: lastCoreUpload,
+                lastCoreDownload: lastCoreDownload,
+                lastCoreProxyUpload: lastCoreProxyUpload,
+                lastCoreProxyDownload: lastCoreProxyDownload,
+                lastCoreConnections: lastCoreConnections,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TrafficStatRecordsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$Database,
+      $TrafficStatRecordsTable,
+      TrafficStatRecord,
+      $$TrafficStatRecordsTableFilterComposer,
+      $$TrafficStatRecordsTableOrderingComposer,
+      $$TrafficStatRecordsTableAnnotationComposer,
+      $$TrafficStatRecordsTableCreateCompanionBuilder,
+      $$TrafficStatRecordsTableUpdateCompanionBuilder,
+      (
+        TrafficStatRecord,
+        BaseReferences<_$Database, $TrafficStatRecordsTable, TrafficStatRecord>,
+      ),
+      TrafficStatRecord,
+      PrefetchHooks Function()
+    >;
 
 class $DatabaseManager {
   final _$Database _db;
@@ -7556,6 +8728,8 @@ class $DatabaseManager {
       $$ClashProvidersTableTableManager(_db, _db.clashProviders);
   $$CustomProxiesTableTableManager get customProxies =>
       $$CustomProxiesTableTableManager(_db, _db.customProxies);
+  $$TrafficStatRecordsTableTableManager get trafficStatRecords =>
+      $$TrafficStatRecordsTableTableManager(_db, _db.trafficStatRecords);
 }
 
 mixin _$ProfilesDaoMixin on DatabaseAccessor<Database> {
@@ -7659,4 +8833,20 @@ class CustomProxiesDaoManager {
       $$ProfilesTableTableManager(_db.attachedDatabase, _db.profiles);
   $$CustomProxiesTableTableManager get customProxies =>
       $$CustomProxiesTableTableManager(_db.attachedDatabase, _db.customProxies);
+}
+
+mixin _$TrafficStatsDaoMixin on DatabaseAccessor<Database> {
+  $TrafficStatRecordsTable get trafficStatRecords =>
+      attachedDatabase.trafficStatRecords;
+  TrafficStatsDaoManager get managers => TrafficStatsDaoManager(this);
+}
+
+class TrafficStatsDaoManager {
+  final _$TrafficStatsDaoMixin _db;
+  TrafficStatsDaoManager(this._db);
+  $$TrafficStatRecordsTableTableManager get trafficStatRecords =>
+      $$TrafficStatRecordsTableTableManager(
+        _db.attachedDatabase,
+        _db.trafficStatRecords,
+      );
 }

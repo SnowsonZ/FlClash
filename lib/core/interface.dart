@@ -68,6 +68,8 @@ mixin CoreInterface {
 
   FutureOr<Traffic> getTotalTraffic(bool onlyStatisticsProxy);
 
+  FutureOr<TrafficStats> getTrafficStats();
+
   FutureOr<CoreMemoryStats?> getMemoryStats();
 
   FutureOr<void> resetTraffic();
@@ -368,6 +370,14 @@ abstract class CoreHandlerInterface with CoreInterface {
       arguments: onlyStatisticsProxy,
     );
     return data == null ? const Traffic() : Traffic.fromJson(data);
+  }
+
+  @override
+  Future<TrafficStats> getTrafficStats() async {
+    final data = await _invokeMethod<Map<String, dynamic>>(
+      method: CoreMethod.getTrafficStats,
+    );
+    return data == null ? const TrafficStats() : TrafficStats.fromJson(data);
   }
 
   @override

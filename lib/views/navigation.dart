@@ -58,6 +58,14 @@ class Navigation implements NavigationPort {
         modes: [NavigationItemMode.moreFull],
       ),
       NavigationItem(
+        glyph: AppGlyphs.dataUsage,
+        label: PageLabel.trafficStats,
+        builder: (_) => const TrafficStatsView(
+          key: GlobalObjectKey(PageLabel.trafficStats),
+        ),
+        modes: [NavigationItemMode.moreFull],
+      ),
+      NavigationItem(
         glyph: AppGlyphs.resources,
         label: PageLabel.resources,
         builder: (_) =>

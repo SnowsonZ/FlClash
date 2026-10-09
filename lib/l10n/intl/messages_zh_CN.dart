@@ -129,9 +129,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m51(label) => "${label}只能是一项";
 
-  static String m52(label) => "${label}必须为URL";
+  static String m52(count) => "${count} 条连接";
 
-  static String m53(count) => "${count} 年前";
+  static String m53(label) => "${label}必须为URL";
+
+  static String m54(count) => "${count} 年前";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -235,6 +237,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "bind": MessageLookupByLibrary.simpleMessage("绑定"),
     "blacklistMode": MessageLookupByLibrary.simpleMessage("黑名单模式"),
     "blockConnection": MessageLookupByLibrary.simpleMessage("阻止连接"),
+    "byApp": MessageLookupByLibrary.simpleMessage("按应用"),
+    "byService": MessageLookupByLibrary.simpleMessage("按服务"),
     "bypassDomain": MessageLookupByLibrary.simpleMessage("排除域名"),
     "bypassDomainDesc": MessageLookupByLibrary.simpleMessage("仅在系统代理启用时生效"),
     "cache": MessageLookupByLibrary.simpleMessage("缓存"),
@@ -264,6 +268,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "checkUpdateError": MessageLookupByLibrary.simpleMessage("当前应用已经是最新版了"),
     "clearData": MessageLookupByLibrary.simpleMessage("清除数据"),
     "clearSearch": MessageLookupByLibrary.simpleMessage("清除搜索"),
+    "clearTrafficStats": MessageLookupByLibrary.simpleMessage("清除统计"),
+    "clearTrafficStatsTip": MessageLookupByLibrary.simpleMessage(
+      "确定清除全部流量统计？此操作不可撤销。",
+    ),
     "clipboardExport": MessageLookupByLibrary.simpleMessage("导出剪贴板"),
     "clipboardImport": MessageLookupByLibrary.simpleMessage("剪贴板导入"),
     "clipboardWriteFailed": MessageLookupByLibrary.simpleMessage(
@@ -830,6 +838,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "proxyGroupEmpty": MessageLookupByLibrary.simpleMessage("策略组为空"),
     "proxyGroupNameDuplicate": MessageLookupByLibrary.simpleMessage("策略组名称重复"),
     "proxyNode": MessageLookupByLibrary.simpleMessage("代理节点"),
+    "proxyOnly": MessageLookupByLibrary.simpleMessage("仅代理流量"),
     "proxyProviders": MessageLookupByLibrary.simpleMessage("代理集"),
     "proxyProvidersEmpty": MessageLookupByLibrary.simpleMessage("代理集为空"),
     "proxyProvidersNotEmpty": MessageLookupByLibrary.simpleMessage("代理集不能为空"),
@@ -1101,6 +1110,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "total": MessageLookupByLibrary.simpleMessage("总计"),
     "totalTraffic": MessageLookupByLibrary.simpleMessage("总流量"),
     "tproxyPort": MessageLookupByLibrary.simpleMessage("Tproxy端口"),
+    "trafficStats": MessageLookupByLibrary.simpleMessage("流量统计"),
+    "trafficStatsAll": MessageLookupByLibrary.simpleMessage("全部"),
+    "trafficStatsConnections": m52,
+    "trafficStatsToday": MessageLookupByLibrary.simpleMessage("今日"),
+    "trafficStatsWeek": MessageLookupByLibrary.simpleMessage("近7天"),
     "trafficUsage": MessageLookupByLibrary.simpleMessage("流量统计"),
     "tun": MessageLookupByLibrary.simpleMessage("虚拟网卡"),
     "tunDesc": MessageLookupByLibrary.simpleMessage("仅在管理员模式生效"),
@@ -1117,7 +1131,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload": MessageLookupByLibrary.simpleMessage("上传"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlDesc": MessageLookupByLibrary.simpleMessage("通过URL获取配置文件"),
-    "urlTip": m52,
+    "urlTip": m53,
     "useHosts": MessageLookupByLibrary.simpleMessage("使用Hosts"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage("使用系统Hosts"),
     "usedTraffic": MessageLookupByLibrary.simpleMessage("已用流量"),
@@ -1138,7 +1152,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "同时设置系统时钟，Android上不生效",
     ),
-    "yearsAgo": m53,
+    "yearsAgo": m54,
     "yes": MessageLookupByLibrary.simpleMessage("是"),
     "zhCN": MessageLookupByLibrary.simpleMessage("中文简体"),
   };

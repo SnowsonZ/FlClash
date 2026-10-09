@@ -6447,6 +6447,81 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Traffic stats`
+  String get trafficStats {
+    return Intl.message(
+      'Traffic stats',
+      name: 'trafficStats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By app`
+  String get byApp {
+    return Intl.message('By app', name: 'byApp', desc: '', args: []);
+  }
+
+  /// `By service`
+  String get byService {
+    return Intl.message('By service', name: 'byService', desc: '', args: []);
+  }
+
+  /// `Today`
+  String get trafficStatsToday {
+    return Intl.message('Today', name: 'trafficStatsToday', desc: '', args: []);
+  }
+
+  /// `Last 7 days`
+  String get trafficStatsWeek {
+    return Intl.message(
+      'Last 7 days',
+      name: 'trafficStatsWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All`
+  String get trafficStatsAll {
+    return Intl.message('All', name: 'trafficStatsAll', desc: '', args: []);
+  }
+
+  /// `Proxy only`
+  String get proxyOnly {
+    return Intl.message('Proxy only', name: 'proxyOnly', desc: '', args: []);
+  }
+
+  /// `Clear stats`
+  String get clearTrafficStats {
+    return Intl.message(
+      'Clear stats',
+      name: 'clearTrafficStats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear all traffic statistics? This cannot be undone.`
+  String get clearTrafficStatsTip {
+    return Intl.message(
+      'Clear all traffic statistics? This cannot be undone.',
+      name: 'clearTrafficStatsTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} connections`
+  String trafficStatsConnections(Object count) {
+    return Intl.message(
+      '$count connections',
+      name: 'trafficStatsConnections',
+      desc: '',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

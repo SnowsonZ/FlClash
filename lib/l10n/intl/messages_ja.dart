@@ -132,9 +132,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m51(label) => "${label}は1項目のみ指定できます";
 
-  static String m52(label) => "${label}はURLである必要があります";
+  static String m52(count) => "${count} 件の接続";
 
-  static String m53(count) => "${count} 年前";
+  static String m53(label) => "${label}はURLである必要があります";
+
+  static String m54(count) => "${count} 年前";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -246,6 +248,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "bind": MessageLookupByLibrary.simpleMessage("連携"),
     "blacklistMode": MessageLookupByLibrary.simpleMessage("ブラックリストモード"),
     "blockConnection": MessageLookupByLibrary.simpleMessage("接続をブロック"),
+    "byApp": MessageLookupByLibrary.simpleMessage("アプリ別"),
+    "byService": MessageLookupByLibrary.simpleMessage("サービス別"),
     "bypassDomain": MessageLookupByLibrary.simpleMessage("除外ドメイン"),
     "bypassDomainDesc": MessageLookupByLibrary.simpleMessage(
       "システムプロキシが有効な場合のみ適用されます",
@@ -281,6 +285,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "checkUpdateError": MessageLookupByLibrary.simpleMessage("すでに最新バージョンです"),
     "clearData": MessageLookupByLibrary.simpleMessage("データを消去"),
     "clearSearch": MessageLookupByLibrary.simpleMessage("検索をクリア"),
+    "clearTrafficStats": MessageLookupByLibrary.simpleMessage("統計を消去"),
+    "clearTrafficStatsTip": MessageLookupByLibrary.simpleMessage(
+      "すべてのトラフィック統計を消去しますか？この操作は元に戻せません。",
+    ),
     "clipboardExport": MessageLookupByLibrary.simpleMessage("クリップボードへエクスポート"),
     "clipboardImport": MessageLookupByLibrary.simpleMessage("クリップボードからインポート"),
     "clipboardWriteFailed": MessageLookupByLibrary.simpleMessage(
@@ -925,6 +933,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "プロキシグループ名が重複しています",
     ),
     "proxyNode": MessageLookupByLibrary.simpleMessage("プロキシノード"),
+    "proxyOnly": MessageLookupByLibrary.simpleMessage("プロキシのみ"),
     "proxyProviders": MessageLookupByLibrary.simpleMessage("プロキシプロバイダー"),
     "proxyProvidersEmpty": MessageLookupByLibrary.simpleMessage(
       "プロキシプロバイダーが空です",
@@ -1236,6 +1245,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "total": MessageLookupByLibrary.simpleMessage("合計"),
     "totalTraffic": MessageLookupByLibrary.simpleMessage("合計トラフィック"),
     "tproxyPort": MessageLookupByLibrary.simpleMessage("TProxyポート"),
+    "trafficStats": MessageLookupByLibrary.simpleMessage("トラフィック統計"),
+    "trafficStatsAll": MessageLookupByLibrary.simpleMessage("すべて"),
+    "trafficStatsConnections": m52,
+    "trafficStatsToday": MessageLookupByLibrary.simpleMessage("今日"),
+    "trafficStatsWeek": MessageLookupByLibrary.simpleMessage("過去7日間"),
     "trafficUsage": MessageLookupByLibrary.simpleMessage("トラフィック統計"),
     "tun": MessageLookupByLibrary.simpleMessage("TUN"),
     "tunDesc": MessageLookupByLibrary.simpleMessage("管理者モードでのみ有効"),
@@ -1252,7 +1266,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload": MessageLookupByLibrary.simpleMessage("アップロード"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlDesc": MessageLookupByLibrary.simpleMessage("URLからプロファイルを取得します"),
-    "urlTip": m52,
+    "urlTip": m53,
     "useHosts": MessageLookupByLibrary.simpleMessage("Hostsを使用"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage("システムのHostsを使用"),
     "usedTraffic": MessageLookupByLibrary.simpleMessage("使用済みトラフィック"),
@@ -1273,7 +1287,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "システムクロックも設定します。Androidでは無視されます",
     ),
-    "yearsAgo": m53,
+    "yearsAgo": m54,
     "yes": MessageLookupByLibrary.simpleMessage("はい"),
     "zhCN": MessageLookupByLibrary.simpleMessage("簡体字中国語"),
   };

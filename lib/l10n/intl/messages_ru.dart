@@ -151,9 +151,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m51(label) => "«${label}» — только одно значение";
 
-  static String m52(label) => "Значение «${label}» должно быть URL";
+  static String m52(count) => "Подключений: ${count}";
 
-  static String m53(count) =>
+  static String m53(label) => "Значение «${label}» должно быть URL";
+
+  static String m54(count) =>
       "${Intl.plural(count, one: '${count} год назад', few: '${count} года назад', many: '${count} лет назад', other: '${count} года назад')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -312,6 +314,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "blockConnection": MessageLookupByLibrary.simpleMessage(
       "Заблокировать соединение",
     ),
+    "byApp": MessageLookupByLibrary.simpleMessage("По приложениям"),
+    "byService": MessageLookupByLibrary.simpleMessage("По сервисам"),
     "bypassDomain": MessageLookupByLibrary.simpleMessage("Исключённые домены"),
     "bypassDomainDesc": MessageLookupByLibrary.simpleMessage(
       "Действует только при включённом системном прокси",
@@ -357,6 +361,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "clearData": MessageLookupByLibrary.simpleMessage("Очистить данные"),
     "clearSearch": MessageLookupByLibrary.simpleMessage("Очистить поиск"),
+    "clearTrafficStats": MessageLookupByLibrary.simpleMessage(
+      "Очистить статистику",
+    ),
+    "clearTrafficStatsTip": MessageLookupByLibrary.simpleMessage(
+      "Очистить всю статистику трафика? Действие нельзя отменить.",
+    ),
     "clipboardExport": MessageLookupByLibrary.simpleMessage(
       "Экспорт в буфер обмена",
     ),
@@ -1146,6 +1156,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Название группы прокси уже используется",
     ),
     "proxyNode": MessageLookupByLibrary.simpleMessage("Прокси-узел"),
+    "proxyOnly": MessageLookupByLibrary.simpleMessage("Только прокси"),
     "proxyProviders": MessageLookupByLibrary.simpleMessage("Провайдеры прокси"),
     "proxyProvidersEmpty": MessageLookupByLibrary.simpleMessage(
       "Список провайдеров прокси пуст",
@@ -1533,6 +1544,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "total": MessageLookupByLibrary.simpleMessage("Всего"),
     "totalTraffic": MessageLookupByLibrary.simpleMessage("Общий трафик"),
     "tproxyPort": MessageLookupByLibrary.simpleMessage("Порт TProxy"),
+    "trafficStats": MessageLookupByLibrary.simpleMessage("Статистика трафика"),
+    "trafficStatsAll": MessageLookupByLibrary.simpleMessage("Всё время"),
+    "trafficStatsConnections": m52,
+    "trafficStatsToday": MessageLookupByLibrary.simpleMessage("Сегодня"),
+    "trafficStatsWeek": MessageLookupByLibrary.simpleMessage("За 7 дней"),
     "trafficUsage": MessageLookupByLibrary.simpleMessage("Статистика трафика"),
     "tun": MessageLookupByLibrary.simpleMessage("TUN"),
     "tunDesc": MessageLookupByLibrary.simpleMessage(
@@ -1553,7 +1569,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload": MessageLookupByLibrary.simpleMessage("Отдача"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlDesc": MessageLookupByLibrary.simpleMessage("Получить профиль по URL"),
-    "urlTip": m52,
+    "urlTip": m53,
     "useHosts": MessageLookupByLibrary.simpleMessage("Использовать hosts"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage(
       "Использовать системный hosts",
@@ -1586,7 +1602,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "Также устанавливать системные часы; Android это игнорирует",
     ),
-    "yearsAgo": m53,
+    "yearsAgo": m54,
     "yes": MessageLookupByLibrary.simpleMessage("Да"),
     "zhCN": MessageLookupByLibrary.simpleMessage("Упрощённый китайский"),
   };

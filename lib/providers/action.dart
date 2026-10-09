@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:drift/drift.dart' show Value;
 import 'package:fl_clash/common/boot_guard.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/common/system_dns.dart';
@@ -33,4 +34,5 @@ part 'actions/scripts.dart';
 part 'actions/clash_providers.dart';
 part 'actions/geo_resource.dart';
 part 'actions/updating.dart';
+part 'actions/traffic_stats.dart';
 part 'generated/action.g.dart';
