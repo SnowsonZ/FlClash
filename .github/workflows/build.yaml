@@ -314,7 +314,8 @@ jobs:
 
   build:
     # Releases publish where the release links point: the public repository.
-    if: github.repository == 'chen08209/FlClash' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    # The SnowsonZ fork builds the same tag matrix for its own artifacts.
+    if: (github.repository == 'chen08209/FlClash' || github.repository == 'SnowsonZ/FlClash') && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     needs: [ dart, plugins, go, android, rust, windows-helper-test ]
     runs-on: ${{ matrix.os }}
     strategy:
@@ -435,6 +436,9 @@ jobs:
           overwrite: true
 
   upload:
+    # Telegram and the public release page are upstream-only; a fork takes
+    # its artifacts from the build job's run page instead.
+    if: github.repository == 'chen08209/FlClash'
     permissions:
       contents: write
     needs: [ build ]
