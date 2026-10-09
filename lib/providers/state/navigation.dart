@@ -76,11 +76,14 @@ MoreToolsSelectorState moreToolsSelectorState(Ref ref) {
               final isDesktop = element.modes.contains(
                 NavigationItemMode.desktop,
               );
-              if (isMore && !isDesktop) return true;
+              final isMobile = element.modes.contains(
+                NavigationItemMode.mobile,
+              );
+              if (isMore && !isDesktop && !isMobile) return true;
               if (viewMode != ViewMode.mobile || !isMore) {
                 return false;
               }
-              return true;
+              return !isMobile;
             }).toList(),
           );
         }),
