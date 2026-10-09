@@ -1473,7 +1473,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "trafficStatsSortUploadSpeed": MessageLookupByLibrary.simpleMessage(
       "Upload speed",
     ),
+    "trafficStatsSpeed": MessageLookupByLibrary.simpleMessage("Speed"),
     "trafficStatsToday": MessageLookupByLibrary.simpleMessage("Today"),
+    "trafficStatsTraffic": MessageLookupByLibrary.simpleMessage("Traffic"),
     "trafficStatsWeek": MessageLookupByLibrary.simpleMessage("Last 7 days"),
     "trafficUsage": MessageLookupByLibrary.simpleMessage("Traffic usage"),
     "tun": MessageLookupByLibrary.simpleMessage("TUN"),

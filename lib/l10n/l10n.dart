@@ -6518,6 +6518,21 @@ class AppLocalizations {
     );
   }
 
+  /// `Speed`
+  String get trafficStatsSpeed {
+    return Intl.message('Speed', name: 'trafficStatsSpeed', desc: '', args: []);
+  }
+
+  /// `Traffic`
+  String get trafficStatsTraffic {
+    return Intl.message(
+      'Traffic',
+      name: 'trafficStatsTraffic',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Proxy only`
   String get proxyOnly {
     return Intl.message('Proxy only', name: 'proxyOnly', desc: '', args: []);

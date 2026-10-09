@@ -197,6 +197,8 @@ void main() {
     }
 
     expect(rowTitles(), ['small', 'big']);
+    expect(find.text('Speed'), findsOneWidget);
+    expect(find.text('Traffic'), findsOneWidget);
 
     bigUpload = 500;
     await tester.pump(const Duration(seconds: 2));
@@ -208,5 +210,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(rowTitles(), ['big', 'small']);
+    expect(find.text('↑ 200 B/s'), findsOneWidget);
   });
 }

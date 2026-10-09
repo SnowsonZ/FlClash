@@ -787,6 +787,8 @@
   "trafficStatsSortTotal": "合計トラフィック",
   "trafficStatsSortDownloadSpeed": "ダウンロード速度",
   "trafficStatsSortUploadSpeed": "アップロード速度",
+  "trafficStatsSpeed": "速度",
+  "trafficStatsTraffic": "トラフィック",
   "proxyOnly": "プロキシのみ",
   "clearTrafficStats": "統計を消去",
   "clearTrafficStatsTip": "すべてのトラフィック統計を消去しますか？この操作は元に戻せません。",

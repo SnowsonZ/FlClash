@@ -787,6 +787,8 @@
   "trafficStatsSortTotal": "Total traffic",
   "trafficStatsSortDownloadSpeed": "Download speed",
   "trafficStatsSortUploadSpeed": "Upload speed",
+  "trafficStatsSpeed": "Speed",
+  "trafficStatsTraffic": "Traffic",
   "proxyOnly": "Proxy only",
   "clearTrafficStats": "Clear stats",
   "clearTrafficStatsTip": "Clear all traffic statistics? This cannot be undone.",

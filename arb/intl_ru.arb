@@ -787,6 +787,8 @@
   "trafficStatsSortTotal": "Весь трафик",
   "trafficStatsSortDownloadSpeed": "Скорость загрузки",
   "trafficStatsSortUploadSpeed": "Скорость отправки",
+  "trafficStatsSpeed": "Скорость",
+  "trafficStatsTraffic": "Трафик",
   "proxyOnly": "Только прокси",
   "clearTrafficStats": "Очистить статистику",
   "clearTrafficStatsTip": "Очистить всю статистику трафика? Действие нельзя отменить.",

@@ -787,6 +787,8 @@
   "trafficStatsSortTotal": "总流量",
   "trafficStatsSortDownloadSpeed": "下载速度",
   "trafficStatsSortUploadSpeed": "上传速度",
+  "trafficStatsSpeed": "速率",
+  "trafficStatsTraffic": "流量",
   "proxyOnly": "仅代理流量",
   "clearTrafficStats": "清除统计",
   "clearTrafficStatsTip": "确定清除全部流量统计？此操作不可撤销。",

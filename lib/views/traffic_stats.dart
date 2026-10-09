@@ -13,14 +13,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum TrafficStatsSort { total, downloadSpeed, uploadSpeed }
 
+const _speedColumnWidth = 112.0;
+const _trafficColumnWidth = 96.0;
+const _columnGap = 16.0;
+
 class _LiveSample {
   final int upload;
   final int download;
+  final int proxyUpload;
+  final int proxyDownload;
   final DateTime at;
 
   const _LiveSample({
     required this.upload,
     required this.download,
+    required this.proxyUpload,
+    required this.proxyDownload,
     required this.at,
   });
 }
@@ -41,6 +49,8 @@ class _TrafficStatsRow {
   int connections = 0;
   int uploadSpeed = 0;
   int downloadSpeed = 0;
+  int proxyUploadSpeed = 0;
+  int proxyDownloadSpeed = 0;
 
   _TrafficStatsRow(this.key);
 }
@@ -122,6 +132,8 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
           entry.key: _LiveSample(
             upload: entry.upload,
             download: entry.download,
+            proxyUpload: entry.proxyUpload,
+            proxyDownload: entry.proxyDownload,
             at: now,
           ),
       };
@@ -162,6 +174,13 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
         item.downloadSpeed =
             (max(0, entry.download - previousSample.download) / seconds)
                 .round();
+        item.proxyUploadSpeed =
+            (max(0, entry.proxyUpload - previousSample.proxyUpload) / seconds)
+                .round();
+        item.proxyDownloadSpeed =
+            (max(0, entry.proxyDownload - previousSample.proxyDownload) /
+                    seconds)
+                .round();
       }
       _liveSamples = samples;
     } else {
@@ -189,14 +208,23 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
     return rows;
   }
 
+  int _downloadOf(_TrafficStatsRow row) =>
+      _proxyOnly ? row.proxyDownload : row.download;
+
+  int _uploadOf(_TrafficStatsRow row) =>
+      _proxyOnly ? row.proxyUpload : row.upload;
+
+  int _downloadSpeedOf(_TrafficStatsRow row) =>
+      _proxyOnly ? row.proxyDownloadSpeed : row.downloadSpeed;
+
+  int _uploadSpeedOf(_TrafficStatsRow row) =>
+      _proxyOnly ? row.proxyUploadSpeed : row.uploadSpeed;
+
   int _sortValue(_TrafficStatsRow row) {
     return switch (_sort) {
-      TrafficStatsSort.total =>
-        _proxyOnly
-            ? row.proxyDownload + row.proxyUpload
-            : row.download + row.upload,
-      TrafficStatsSort.downloadSpeed => row.downloadSpeed,
-      TrafficStatsSort.uploadSpeed => row.uploadSpeed,
+      TrafficStatsSort.total => _downloadOf(row) + _uploadOf(row),
+      TrafficStatsSort.downloadSpeed => _downloadSpeedOf(row),
+      TrafficStatsSort.uploadSpeed => _uploadSpeedOf(row),
     };
   }
 
@@ -249,17 +277,24 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
                 label: appLocalizations.nullTip(appLocalizations.trafficStats),
                 illustration: NullStatusIllustration.data,
               ),
-              child: ListView.separated(
-                shrinkWrap: true,
-                physics: const NextClampingScrollPhysics(),
-                padding: EdgeInsets.only(
-                  bottom: 16 + BottomInsetScope.of(context),
-                ),
-                itemCount: _rows.length,
-                separatorBuilder: (_, _) => const Divider(height: 0),
-                itemBuilder: (context, index) {
-                  return _buildRow(context, _rows[index]);
-                },
+              child: Column(
+                children: [
+                  _buildListHeader(context),
+                  Expanded(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NextClampingScrollPhysics(),
+                      padding: EdgeInsets.only(
+                        bottom: 16 + BottomInsetScope.of(context),
+                      ),
+                      itemCount: _rows.length,
+                      separatorBuilder: (_, _) => const Divider(height: 0),
+                      itemBuilder: (context, index) {
+                        return _buildRow(context, _rows[index]);
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -376,29 +411,65 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
     );
   }
 
+  Widget _buildListHeader(BuildContext context) {
+    final appLocalizations = context.appLocalizations;
+    final style = context.textTheme.labelSmall?.copyWith(
+      color: context.colorScheme.onSurfaceVariant,
+    );
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          SizedBox(
+            width: _speedColumnWidth,
+            child: Text(
+              appLocalizations.trafficStatsSpeed,
+              style: style,
+              textAlign: TextAlign.end,
+            ),
+          ),
+          const SizedBox(width: _columnGap),
+          SizedBox(
+            width: _trafficColumnWidth,
+            child: Text(
+              appLocalizations.trafficStatsTraffic,
+              style: style,
+              textAlign: TextAlign.end,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMetricLines(BuildContext context, String first, String second) {
+    final style = context.textTheme.bodySmall?.copyWith(
+      color: context.colorScheme.onSurfaceVariant,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+    Widget line(String text) => Text(
+      text,
+      style: style,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.end,
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: [line(first), line(second)],
+    );
+  }
+
   Widget _buildRow(BuildContext context, _TrafficStatsRow row) {
     final appLocalizations = context.appLocalizations;
     final name = row.key.isEmpty ? appLocalizations.unknown : row.key;
-    final uploadShow = (row.upload).traffic;
-    final downloadShow = (row.download).traffic;
-    final proxyDownloadShow = (row.proxyDownload).traffic;
-    Widget? trailing;
-    if (_sort == TrafficStatsSort.downloadSpeed) {
-      trailing = _buildSpeedText(
-        context,
-        AppGlyphs.arrowDown,
-        row.downloadSpeed,
-      );
-    } else if (_sort == TrafficStatsSort.uploadSpeed) {
-      trailing = _buildSpeedText(context, AppGlyphs.arrowUp, row.uploadSpeed);
-    } else if (_proxyOnly) {
-      trailing = Text(
-        '${proxyDownloadShow.value} ${proxyDownloadShow.unit}',
-        style: context.textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.w500,
-        ),
-      );
-    }
+    final downloadShow = _downloadOf(row).traffic;
+    final uploadShow = _uploadOf(row).traffic;
+    final downloadSpeedShow = _downloadSpeedOf(row).traffic;
+    final uploadSpeedShow = _uploadSpeedOf(row).traffic;
     return ListItem(
       title: Text(
         name,
@@ -409,31 +480,33 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
         ),
       ),
       subtitle: Text(
-        '${appLocalizations.trafficStatsConnections(row.connections)}   '
-        '↓ ${downloadShow.value} ${downloadShow.unit}   '
-        '↑ ${uploadShow.value} ${uploadShow.unit}',
+        appLocalizations.trafficStatsConnections(row.connections),
         style: context.textTheme.bodySmall?.copyWith(
           color: context.colorScheme.onSurfaceVariant,
         ),
       ),
-      trailing: trailing,
-    );
-  }
-
-  Widget _buildSpeedText(BuildContext context, Glyph glyph, int speed) {
-    final speedShow = speed.traffic;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        GlyphIcon(glyph, size: 16),
-        const SizedBox(width: 4),
-        Text(
-          '${speedShow.value} ${speedShow.unit}/s',
-          style: context.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w500,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: _speedColumnWidth,
+            child: _buildMetricLines(
+              context,
+              '↓ ${downloadSpeedShow.value} ${downloadSpeedShow.unit}/s',
+              '↑ ${uploadSpeedShow.value} ${uploadSpeedShow.unit}/s',
+            ),
           ),
-        ),
-      ],
+          const SizedBox(width: _columnGap),
+          SizedBox(
+            width: _trafficColumnWidth,
+            child: _buildMetricLines(
+              context,
+              '↓ ${downloadShow.value} ${downloadShow.unit}',
+              '↑ ${uploadShow.value} ${uploadShow.unit}',
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
