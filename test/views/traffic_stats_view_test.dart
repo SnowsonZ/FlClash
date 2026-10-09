@@ -161,4 +161,52 @@ void main() {
 
     expect(find.byType(ListItem), findsNothing);
   });
+
+  testWidgets('sorting by upload speed reorders rows', (tester) async {
+    var bigUpload = 100;
+    when(() => core.getTrafficStats()).thenAnswer(
+      (_) async => TrafficStats(
+        process: [
+          const TrafficKeyStat(
+            key: 'small',
+            upload: 1000,
+            download: 5000,
+            proxyUpload: 1000,
+            proxyDownload: 5000,
+            connections: 1,
+          ),
+          TrafficKeyStat(
+            key: 'big',
+            upload: bigUpload,
+            download: 50,
+            proxyUpload: bigUpload,
+            proxyDownload: 50,
+            connections: 1,
+          ),
+        ],
+      ),
+    );
+
+    await pumpView(tester);
+
+    List<String> rowTitles() {
+      return tester
+          .widgetList<ListItem>(find.byType(ListItem))
+          .map((item) => (item.title as Text).data ?? '')
+          .toList();
+    }
+
+    expect(rowTitles(), ['small', 'big']);
+
+    bigUpload = 500;
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump();
+
+    await tester.tap(find.byKey(const Key('trafficStatsSortMenu')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Upload speed'));
+    await tester.pumpAndSettle();
+
+    expect(rowTitles(), ['big', 'small']);
+  });
 }

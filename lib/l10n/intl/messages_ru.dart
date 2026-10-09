@@ -1547,6 +1547,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "trafficStats": MessageLookupByLibrary.simpleMessage("Статистика трафика"),
     "trafficStatsAll": MessageLookupByLibrary.simpleMessage("Всё время"),
     "trafficStatsConnections": m52,
+    "trafficStatsSortDownloadSpeed": MessageLookupByLibrary.simpleMessage(
+      "Скорость загрузки",
+    ),
+    "trafficStatsSortTotal": MessageLookupByLibrary.simpleMessage(
+      "Весь трафик",
+    ),
+    "trafficStatsSortUploadSpeed": MessageLookupByLibrary.simpleMessage(
+      "Скорость отправки",
+    ),
     "trafficStatsToday": MessageLookupByLibrary.simpleMessage("Сегодня"),
     "trafficStatsWeek": MessageLookupByLibrary.simpleMessage("За 7 дней"),
     "trafficUsage": MessageLookupByLibrary.simpleMessage("Статистика трафика"),

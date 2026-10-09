@@ -6488,6 +6488,36 @@ class AppLocalizations {
     return Intl.message('All', name: 'trafficStatsAll', desc: '', args: []);
   }
 
+  /// `Total traffic`
+  String get trafficStatsSortTotal {
+    return Intl.message(
+      'Total traffic',
+      name: 'trafficStatsSortTotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download speed`
+  String get trafficStatsSortDownloadSpeed {
+    return Intl.message(
+      'Download speed',
+      name: 'trafficStatsSortDownloadSpeed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload speed`
+  String get trafficStatsSortUploadSpeed {
+    return Intl.message(
+      'Upload speed',
+      name: 'trafficStatsSortUploadSpeed',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Proxy only`
   String get proxyOnly {
     return Intl.message('Proxy only', name: 'proxyOnly', desc: '', args: []);

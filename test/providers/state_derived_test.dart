@@ -261,6 +261,10 @@ void main() {
       desktop.navigationItems[desktop.currentIndex].label,
       PageLabel.connections,
     );
+    expect(
+      desktop.navigationItems.map((item) => item.label),
+      contains(PageLabel.trafficStats),
+    );
 
     container
         .read(currentPageLabelProvider.notifier)

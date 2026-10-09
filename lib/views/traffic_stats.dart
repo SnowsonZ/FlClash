@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:clock/clock.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/database/database.dart';
 import 'package:fl_clash/enum/enum.dart';
@@ -7,6 +10,20 @@ import 'package:fl_clash/providers/providers.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+enum TrafficStatsSort { total, downloadSpeed, uploadSpeed }
+
+class _LiveSample {
+  final int upload;
+  final int download;
+  final DateTime at;
+
+  const _LiveSample({
+    required this.upload,
+    required this.download,
+    required this.at,
+  });
+}
 
 class TrafficStatsView extends ConsumerStatefulWidget {
   const TrafficStatsView({super.key});
@@ -22,6 +39,8 @@ class _TrafficStatsRow {
   int proxyUpload = 0;
   int proxyDownload = 0;
   int connections = 0;
+  int uploadSpeed = 0;
+  int downloadSpeed = 0;
 
   _TrafficStatsRow(this.key);
 }
@@ -33,8 +52,10 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
         RouteMotionHoldMixin<TrafficStatsView> {
   TrafficStatsScope _scope = TrafficStatsScope.process;
   TrafficStatsRange _range = TrafficStatsRange.today;
+  TrafficStatsSort _sort = TrafficStatsSort.total;
   bool _proxyOnly = true;
   List<_TrafficStatsRow> _rows = [];
+  Map<String, _LiveSample> _liveSamples = const {};
 
   @override
   Duration get pollInterval => const Duration(seconds: 2);
@@ -55,7 +76,7 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
   }
 
   Future<List<_TrafficStatsRow>> _loadRows() async {
-    final now = DateTime.now();
+    final now = clock.now();
     final today = trafficStatsDate(now);
     final fromDate = switch (_range) {
       TrafficStatsRange.today => today,
@@ -95,6 +116,15 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
         TrafficStatsScope.process => live.process,
         TrafficStatsScope.host => live.host,
       };
+      final now = clock.now();
+      final samples = <String, _LiveSample>{
+        for (final entry in entries)
+          entry.key: _LiveSample(
+            upload: entry.upload,
+            download: entry.download,
+            at: now,
+          ),
+      };
       if (entries.isNotEmpty) {
         final previous = await dao.getLatestBefore(today, _scope);
         for (final entry in entries) {
@@ -113,6 +143,29 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
           item.connections += merged.connections.value;
         }
       }
+      for (final entry in entries) {
+        final previousSample = _liveSamples[entry.key];
+        if (previousSample == null) {
+          continue;
+        }
+        final elapsed = now.difference(previousSample.at);
+        if (elapsed < const Duration(milliseconds: 500)) {
+          continue;
+        }
+        final seconds = elapsed.inMicroseconds / Duration.microsecondsPerSecond;
+        final item = totals[entry.key];
+        if (item == null) {
+          continue;
+        }
+        item.uploadSpeed =
+            (max(0, entry.upload - previousSample.upload) / seconds).round();
+        item.downloadSpeed =
+            (max(0, entry.download - previousSample.download) / seconds)
+                .round();
+      }
+      _liveSamples = samples;
+    } else {
+      _liveSamples = const {};
     }
     for (final row in todayRows.values) {
       if (totals.containsKey(row.key) && _liveHas(live, row.key)) {
@@ -132,14 +185,23 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
           .where((row) => row.proxyUpload > 0 || row.proxyDownload > 0)
           .toList();
     }
-    int sortValue(_TrafficStatsRow row) {
-      return _proxyOnly
-          ? row.proxyDownload + row.proxyUpload
-          : row.download + row.upload;
-    }
-
-    rows.sort((a, b) => sortValue(b).compareTo(sortValue(a)));
+    _sortRows(rows);
     return rows;
+  }
+
+  int _sortValue(_TrafficStatsRow row) {
+    return switch (_sort) {
+      TrafficStatsSort.total =>
+        _proxyOnly
+            ? row.proxyDownload + row.proxyUpload
+            : row.download + row.upload,
+      TrafficStatsSort.downloadSpeed => row.downloadSpeed,
+      TrafficStatsSort.uploadSpeed => row.uploadSpeed,
+    };
+  }
+
+  void _sortRows(List<_TrafficStatsRow> rows) {
+    rows.sort((a, b) => _sortValue(b).compareTo(_sortValue(a)));
   }
 
   bool _liveHas(TrafficStats? live, String key) {
@@ -191,7 +253,6 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
                 shrinkWrap: true,
                 physics: const NextClampingScrollPhysics(),
                 padding: EdgeInsets.only(
-                  top: context.contentTopPadding,
                   bottom: 16 + BottomInsetScope.of(context),
                 ),
                 itemCount: _rows.length,
@@ -210,64 +271,106 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
   Widget _buildFilters(BuildContext context) {
     final appLocalizations = context.appLocalizations;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Wrap(
-        spacing: 12,
-        runSpacing: 8,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          SegmentedButton<TrafficStatsScope>(
-            segments: [
-              ButtonSegment(
-                value: TrafficStatsScope.process,
-                label: Text(appLocalizations.byApp),
-              ),
-              ButtonSegment(
-                value: TrafficStatsScope.host,
-                label: Text(appLocalizations.byService),
-              ),
-            ],
-            selected: {_scope},
-            onSelectionChanged: (selection) {
-              setState(() {
-                _scope = selection.first;
-              });
-              restartPolling();
-            },
-          ),
-          SegmentedButton<TrafficStatsRange>(
-            segments: [
-              ButtonSegment(
-                value: TrafficStatsRange.today,
-                label: Text(appLocalizations.trafficStatsToday),
-              ),
-              ButtonSegment(
-                value: TrafficStatsRange.week,
-                label: Text(appLocalizations.trafficStatsWeek),
-              ),
-              ButtonSegment(
-                value: TrafficStatsRange.all,
-                label: Text(appLocalizations.trafficStatsAll),
-              ),
-            ],
-            selected: {_range},
-            onSelectionChanged: (selection) {
-              setState(() {
-                _range = selection.first;
-              });
-              restartPolling();
-            },
-          ),
-          FilterChip(
-            label: Text(appLocalizations.proxyOnly),
-            selected: _proxyOnly,
-            onSelected: (value) {
-              setState(() {
-                _proxyOnly = value;
-              });
-              restartPolling();
-            },
-          ),
+      padding: EdgeInsets.fromLTRB(16, context.contentTopPadding + 8, 16, 8),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            SegmentedButton<TrafficStatsScope>(
+              segments: [
+                ButtonSegment(
+                  value: TrafficStatsScope.process,
+                  label: Text(appLocalizations.byApp),
+                ),
+                ButtonSegment(
+                  value: TrafficStatsScope.host,
+                  label: Text(appLocalizations.byService),
+                ),
+              ],
+              selected: {_scope},
+              onSelectionChanged: (selection) {
+                setState(() {
+                  _scope = selection.first;
+                  _liveSamples = const {};
+                });
+                restartPolling();
+              },
+            ),
+            const SizedBox(width: 12),
+            SegmentedButton<TrafficStatsRange>(
+              segments: [
+                ButtonSegment(
+                  value: TrafficStatsRange.today,
+                  label: Text(appLocalizations.trafficStatsToday),
+                ),
+                ButtonSegment(
+                  value: TrafficStatsRange.week,
+                  label: Text(appLocalizations.trafficStatsWeek),
+                ),
+                ButtonSegment(
+                  value: TrafficStatsRange.all,
+                  label: Text(appLocalizations.trafficStatsAll),
+                ),
+              ],
+              selected: {_range},
+              onSelectionChanged: (selection) {
+                setState(() {
+                  _range = selection.first;
+                });
+                restartPolling();
+              },
+            ),
+            const SizedBox(width: 12),
+            FilterChip(
+              label: Text(appLocalizations.proxyOnly),
+              selected: _proxyOnly,
+              onSelected: (value) {
+                setState(() {
+                  _proxyOnly = value;
+                });
+                restartPolling();
+              },
+            ),
+            const SizedBox(width: 12),
+            _buildSortMenu(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSortMenu(BuildContext context) {
+    final appLocalizations = context.appLocalizations;
+    String labelOf(TrafficStatsSort sort) {
+      return switch (sort) {
+        TrafficStatsSort.total => appLocalizations.trafficStatsSortTotal,
+        TrafficStatsSort.downloadSpeed =>
+          appLocalizations.trafficStatsSortDownloadSpeed,
+        TrafficStatsSort.uploadSpeed =>
+          appLocalizations.trafficStatsSortUploadSpeed,
+      };
+    }
+
+    return CommonPopupBox(
+      targetBuilder: (open) => ActionChip(
+        key: const Key('trafficStatsSortMenu'),
+        avatar: const GlyphIcon(AppGlyphs.sort),
+        label: Text(labelOf(_sort)),
+        onPressed: () => open(offset: const Offset(0, 8)),
+      ),
+      popupBuilder: (_) => CommonPopupMenu(
+        items: [
+          for (final sort in TrafficStatsSort.values)
+            CommonPopupMenuItem(
+              label: labelOf(sort),
+              checked: sort == _sort,
+              onPressed: () {
+                setState(() {
+                  _sort = sort;
+                  _sortRows(_rows);
+                });
+              },
+            ),
         ],
       ),
     );
@@ -279,6 +382,23 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
     final uploadShow = (row.upload).traffic;
     final downloadShow = (row.download).traffic;
     final proxyDownloadShow = (row.proxyDownload).traffic;
+    Widget? trailing;
+    if (_sort == TrafficStatsSort.downloadSpeed) {
+      trailing = _buildSpeedText(
+        context,
+        AppGlyphs.arrowDown,
+        row.downloadSpeed,
+      );
+    } else if (_sort == TrafficStatsSort.uploadSpeed) {
+      trailing = _buildSpeedText(context, AppGlyphs.arrowUp, row.uploadSpeed);
+    } else if (_proxyOnly) {
+      trailing = Text(
+        '${proxyDownloadShow.value} ${proxyDownloadShow.unit}',
+        style: context.textTheme.bodyMedium?.copyWith(
+          fontWeight: FontWeight.w500,
+        ),
+      );
+    }
     return ListItem(
       title: Text(
         name,
@@ -296,14 +416,24 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
           color: context.colorScheme.onSurfaceVariant,
         ),
       ),
-      trailing: _proxyOnly
-          ? Text(
-              '${proxyDownloadShow.value} ${proxyDownloadShow.unit}',
-              style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
-            )
-          : null,
+      trailing: trailing,
+    );
+  }
+
+  Widget _buildSpeedText(BuildContext context, Glyph glyph, int speed) {
+    final speedShow = speed.traffic;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        GlyphIcon(glyph, size: 16),
+        const SizedBox(width: 4),
+        Text(
+          '${speedShow.value} ${speedShow.unit}/s',
+          style: context.textTheme.bodyMedium?.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1113,6 +1113,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "trafficStats": MessageLookupByLibrary.simpleMessage("流量统计"),
     "trafficStatsAll": MessageLookupByLibrary.simpleMessage("全部"),
     "trafficStatsConnections": m52,
+    "trafficStatsSortDownloadSpeed": MessageLookupByLibrary.simpleMessage(
+      "下载速度",
+    ),
+    "trafficStatsSortTotal": MessageLookupByLibrary.simpleMessage("总流量"),
+    "trafficStatsSortUploadSpeed": MessageLookupByLibrary.simpleMessage("上传速度"),
     "trafficStatsToday": MessageLookupByLibrary.simpleMessage("今日"),
     "trafficStatsWeek": MessageLookupByLibrary.simpleMessage("近7天"),
     "trafficUsage": MessageLookupByLibrary.simpleMessage("流量统计"),

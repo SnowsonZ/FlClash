@@ -1248,6 +1248,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "trafficStats": MessageLookupByLibrary.simpleMessage("トラフィック統計"),
     "trafficStatsAll": MessageLookupByLibrary.simpleMessage("すべて"),
     "trafficStatsConnections": m52,
+    "trafficStatsSortDownloadSpeed": MessageLookupByLibrary.simpleMessage(
+      "ダウンロード速度",
+    ),
+    "trafficStatsSortTotal": MessageLookupByLibrary.simpleMessage("合計トラフィック"),
+    "trafficStatsSortUploadSpeed": MessageLookupByLibrary.simpleMessage(
+      "アップロード速度",
+    ),
     "trafficStatsToday": MessageLookupByLibrary.simpleMessage("今日"),
     "trafficStatsWeek": MessageLookupByLibrary.simpleMessage("過去7日間"),
     "trafficUsage": MessageLookupByLibrary.simpleMessage("トラフィック統計"),
