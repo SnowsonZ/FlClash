@@ -48,6 +48,8 @@ export 'search.dart';
 export 'shape.dart';
 export 'snowflake.dart';
 export 'string.dart';
+export 'subscription_decrypt.dart';
+export 'subscription_exception.dart';
 export 'system.dart';
 export 'task.dart';
 export 'task_pool.dart';

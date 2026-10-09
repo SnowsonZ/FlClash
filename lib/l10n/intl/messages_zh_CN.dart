@@ -1079,6 +1079,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "subRuleNotEmpty": MessageLookupByLibrary.simpleMessage("子规则不能为空"),
     "submit": MessageLookupByLibrary.simpleMessage("提交"),
     "subscriptionInfo": MessageLookupByLibrary.simpleMessage("订阅信息"),
+    "subscriptionLoginPassword": MessageLookupByLibrary.simpleMessage("网站登录密码"),
+    "subscriptionLoginPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "仅加密订阅需要",
+    ),
+    "subscriptionPasswordWrongTip": MessageLookupByLibrary.simpleMessage(
+      "密码错误，请重试",
+    ),
     "suspended": MessageLookupByLibrary.simpleMessage("挂起中…"),
     "switchProfile": MessageLookupByLibrary.simpleMessage("切换配置"),
     "sync": MessageLookupByLibrary.simpleMessage("同步"),

@@ -1503,6 +1503,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionInfo": MessageLookupByLibrary.simpleMessage(
       "Информация о подписке",
     ),
+    "subscriptionLoginPassword": MessageLookupByLibrary.simpleMessage(
+      "Пароль входа на сайт",
+    ),
+    "subscriptionLoginPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "Только для зашифрованных подписок",
+    ),
+    "subscriptionPasswordWrongTip": MessageLookupByLibrary.simpleMessage(
+      "Неверный пароль, попробуйте снова",
+    ),
     "suspended": MessageLookupByLibrary.simpleMessage("Приостановлено…"),
     "switchProfile": MessageLookupByLibrary.simpleMessage("Сменить профиль"),
     "sync": MessageLookupByLibrary.simpleMessage("Синхронизация"),

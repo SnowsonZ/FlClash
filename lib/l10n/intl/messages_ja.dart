@@ -1212,6 +1212,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "subRuleNotEmpty": MessageLookupByLibrary.simpleMessage("サブルールは空にできません"),
     "submit": MessageLookupByLibrary.simpleMessage("送信"),
     "subscriptionInfo": MessageLookupByLibrary.simpleMessage("サブスクリプション情報"),
+    "subscriptionLoginPassword": MessageLookupByLibrary.simpleMessage(
+      "ウェブサイトログインパスワード",
+    ),
+    "subscriptionLoginPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "暗号化された購読のみ",
+    ),
+    "subscriptionPasswordWrongTip": MessageLookupByLibrary.simpleMessage(
+      "パスワードが正しくありません。もう一度お試しください",
+    ),
     "suspended": MessageLookupByLibrary.simpleMessage("一時停止中…"),
     "switchProfile": MessageLookupByLibrary.simpleMessage("プロファイルを切り替え"),
     "sync": MessageLookupByLibrary.simpleMessage("同期"),

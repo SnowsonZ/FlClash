@@ -53,6 +53,7 @@ _Profile _$ProfileFromJson(Map<String, dynamic> json) => _Profile(
   scriptId: (json['scriptId'] as num?)?.toInt(),
   matchTarget: json['matchTarget'] as String?,
   order: (json['order'] as num?)?.toInt(),
+  loginPassword: json['loginPassword'] as String?,
 );
 
 Map<String, dynamic> _$ProfileToJson(_Profile instance) => <String, dynamic>{
@@ -70,6 +71,7 @@ Map<String, dynamic> _$ProfileToJson(_Profile instance) => <String, dynamic>{
   'scriptId': instance.scriptId,
   'matchTarget': instance.matchTarget,
   'order': instance.order,
+  'loginPassword': instance.loginPassword,
 };
 
 const _$OverwriteTypeEnumMap = {

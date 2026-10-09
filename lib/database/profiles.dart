@@ -21,6 +21,8 @@ class Profiles extends Table {
 
   TextColumn get matchTarget => text().nullable()();
 
+  TextColumn get loginPassword => text().nullable()();
+
   IntColumn get autoUpdateDurationMillis => integer()();
 
   TextColumn get subscriptionInfo =>
@@ -123,6 +125,7 @@ extension RawProfilExt on RawProfile {
       scriptId: scriptId,
       matchTarget: matchTarget,
       order: order,
+      loginPassword: loginPassword,
     );
   }
 }
@@ -144,6 +147,7 @@ extension ProfilesCompanionExt on Profile {
       scriptId: Value(scriptId),
       matchTarget: Value(matchTarget),
       order: Value(order ?? this.order),
+      loginPassword: Value(loginPassword),
     );
   }
 }

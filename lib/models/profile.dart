@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -58,6 +59,7 @@ abstract class Profile with _$Profile {
     int? scriptId,
     String? matchTarget,
     int? order,
+    String? loginPassword,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, Object?> json) =>
@@ -176,13 +178,29 @@ extension ProfileExtension on Profile {
     final response = await request.getFileResponseForUrl(url);
     final disposition = response.headers.value('content-disposition');
     final userinfo = response.headers.value('subscription-userinfo');
+    final encHeader = response.headers.value(subscriptionEncryptionHeader);
+    var data = response.data ?? Uint8List.fromList([]);
+
+    if (isSubscriptionEncrypted(encHeader)) {
+      final password = loginPassword;
+      if (password == null || password.isEmpty) {
+        throw const SubscriptionEncryptedException(passwordWrong: false);
+      }
+      final base64Str = utf8.decode(data);
+      final decrypted = tryDecryptSubscription(password, base64Str);
+      if (decrypted == null) {
+        throw const SubscriptionEncryptedException(passwordWrong: true);
+      }
+      data = decrypted;
+    }
+
     return copyWith(
       label: label.takeFirstValid([
         getFileNameForDisposition(disposition),
         id.toString(),
       ]),
       subscriptionInfo: SubscriptionInfo.formHString(userinfo),
-    ).saveFile(response.data ?? Uint8List.fromList([]), validate: validate);
+    ).saveFile(data, validate: validate);
   }
 
   Future<Profile> saveFile(

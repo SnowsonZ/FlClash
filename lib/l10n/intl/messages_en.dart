@@ -1426,6 +1426,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionInfo": MessageLookupByLibrary.simpleMessage(
       "Subscription info",
     ),
+    "subscriptionLoginPassword": MessageLookupByLibrary.simpleMessage(
+      "Website login password",
+    ),
+    "subscriptionLoginPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "For encrypted subscriptions only",
+    ),
+    "subscriptionPasswordWrongTip": MessageLookupByLibrary.simpleMessage(
+      "Incorrect password, please try again",
+    ),
     "suspended": MessageLookupByLibrary.simpleMessage("Suspended…"),
     "switchProfile": MessageLookupByLibrary.simpleMessage("Switch profile"),
     "sync": MessageLookupByLibrary.simpleMessage("Sync"),

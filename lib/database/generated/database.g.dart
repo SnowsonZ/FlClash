@@ -90,6 +90,17 @@ class $ProfilesTable extends Profiles
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _loginPasswordMeta = const VerificationMeta(
+    'loginPassword',
+  );
+  @override
+  late final GeneratedColumn<String> loginPassword = GeneratedColumn<String>(
+    'login_password',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _autoUpdateDurationMillisMeta =
       const VerificationMeta('autoUpdateDurationMillis');
   @override
@@ -161,6 +172,7 @@ class $ProfilesTable extends Profiles
     overwriteType,
     scriptId,
     matchTarget,
+    loginPassword,
     autoUpdateDurationMillis,
     subscriptionInfo,
     autoUpdate,
@@ -232,6 +244,15 @@ class $ProfilesTable extends Profiles
         ),
       );
     }
+    if (data.containsKey('login_password')) {
+      context.handle(
+        _loginPasswordMeta,
+        loginPassword.isAcceptableOrUnknown(
+          data['login_password']!,
+          _loginPasswordMeta,
+        ),
+      );
+    }
     if (data.containsKey('auto_update_duration_millis')) {
       context.handle(
         _autoUpdateDurationMillisMeta,
@@ -300,6 +321,10 @@ class $ProfilesTable extends Profiles
         DriftSqlType.string,
         data['${effectivePrefix}match_target'],
       ),
+      loginPassword: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}login_password'],
+      ),
       autoUpdateDurationMillis: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}auto_update_duration_millis'],
@@ -359,6 +384,7 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
   final OverwriteType overwriteType;
   final int? scriptId;
   final String? matchTarget;
+  final String? loginPassword;
   final int autoUpdateDurationMillis;
   final SubscriptionInfo? subscriptionInfo;
   final bool autoUpdate;
@@ -374,6 +400,7 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
     required this.overwriteType,
     this.scriptId,
     this.matchTarget,
+    this.loginPassword,
     required this.autoUpdateDurationMillis,
     this.subscriptionInfo,
     required this.autoUpdate,
@@ -403,6 +430,9 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
     }
     if (!nullToAbsent || matchTarget != null) {
       map['match_target'] = Variable<String>(matchTarget);
+    }
+    if (!nullToAbsent || loginPassword != null) {
+      map['login_password'] = Variable<String>(loginPassword);
     }
     map['auto_update_duration_millis'] = Variable<int>(
       autoUpdateDurationMillis,
@@ -447,6 +477,9 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
       matchTarget: matchTarget == null && nullToAbsent
           ? const Value.absent()
           : Value(matchTarget),
+      loginPassword: loginPassword == null && nullToAbsent
+          ? const Value.absent()
+          : Value(loginPassword),
       autoUpdateDurationMillis: Value(autoUpdateDurationMillis),
       subscriptionInfo: subscriptionInfo == null && nullToAbsent
           ? const Value.absent()
@@ -476,6 +509,7 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
       ),
       scriptId: serializer.fromJson<int?>(json['scriptId']),
       matchTarget: serializer.fromJson<String?>(json['matchTarget']),
+      loginPassword: serializer.fromJson<String?>(json['loginPassword']),
       autoUpdateDurationMillis: serializer.fromJson<int>(
         json['autoUpdateDurationMillis'],
       ),
@@ -504,6 +538,7 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
       ),
       'scriptId': serializer.toJson<int?>(scriptId),
       'matchTarget': serializer.toJson<String?>(matchTarget),
+      'loginPassword': serializer.toJson<String?>(loginPassword),
       'autoUpdateDurationMillis': serializer.toJson<int>(
         autoUpdateDurationMillis,
       ),
@@ -526,6 +561,7 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
     OverwriteType? overwriteType,
     Value<int?> scriptId = const Value.absent(),
     Value<String?> matchTarget = const Value.absent(),
+    Value<String?> loginPassword = const Value.absent(),
     int? autoUpdateDurationMillis,
     Value<SubscriptionInfo?> subscriptionInfo = const Value.absent(),
     bool? autoUpdate,
@@ -545,6 +581,9 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
     overwriteType: overwriteType ?? this.overwriteType,
     scriptId: scriptId.present ? scriptId.value : this.scriptId,
     matchTarget: matchTarget.present ? matchTarget.value : this.matchTarget,
+    loginPassword: loginPassword.present
+        ? loginPassword.value
+        : this.loginPassword,
     autoUpdateDurationMillis:
         autoUpdateDurationMillis ?? this.autoUpdateDurationMillis,
     subscriptionInfo: subscriptionInfo.present
@@ -573,6 +612,9 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
       matchTarget: data.matchTarget.present
           ? data.matchTarget.value
           : this.matchTarget,
+      loginPassword: data.loginPassword.present
+          ? data.loginPassword.value
+          : this.loginPassword,
       autoUpdateDurationMillis: data.autoUpdateDurationMillis.present
           ? data.autoUpdateDurationMillis.value
           : this.autoUpdateDurationMillis,
@@ -601,6 +643,7 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
           ..write('overwriteType: $overwriteType, ')
           ..write('scriptId: $scriptId, ')
           ..write('matchTarget: $matchTarget, ')
+          ..write('loginPassword: $loginPassword, ')
           ..write('autoUpdateDurationMillis: $autoUpdateDurationMillis, ')
           ..write('subscriptionInfo: $subscriptionInfo, ')
           ..write('autoUpdate: $autoUpdate, ')
@@ -621,6 +664,7 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
     overwriteType,
     scriptId,
     matchTarget,
+    loginPassword,
     autoUpdateDurationMillis,
     subscriptionInfo,
     autoUpdate,
@@ -640,6 +684,7 @@ class RawProfile extends DataClass implements Insertable<RawProfile> {
           other.overwriteType == this.overwriteType &&
           other.scriptId == this.scriptId &&
           other.matchTarget == this.matchTarget &&
+          other.loginPassword == this.loginPassword &&
           other.autoUpdateDurationMillis == this.autoUpdateDurationMillis &&
           other.subscriptionInfo == this.subscriptionInfo &&
           other.autoUpdate == this.autoUpdate &&
@@ -657,6 +702,7 @@ class ProfilesCompanion extends UpdateCompanion<RawProfile> {
   final Value<OverwriteType> overwriteType;
   final Value<int?> scriptId;
   final Value<String?> matchTarget;
+  final Value<String?> loginPassword;
   final Value<int> autoUpdateDurationMillis;
   final Value<SubscriptionInfo?> subscriptionInfo;
   final Value<bool> autoUpdate;
@@ -672,6 +718,7 @@ class ProfilesCompanion extends UpdateCompanion<RawProfile> {
     this.overwriteType = const Value.absent(),
     this.scriptId = const Value.absent(),
     this.matchTarget = const Value.absent(),
+    this.loginPassword = const Value.absent(),
     this.autoUpdateDurationMillis = const Value.absent(),
     this.subscriptionInfo = const Value.absent(),
     this.autoUpdate = const Value.absent(),
@@ -688,6 +735,7 @@ class ProfilesCompanion extends UpdateCompanion<RawProfile> {
     required OverwriteType overwriteType,
     this.scriptId = const Value.absent(),
     this.matchTarget = const Value.absent(),
+    this.loginPassword = const Value.absent(),
     required int autoUpdateDurationMillis,
     this.subscriptionInfo = const Value.absent(),
     required bool autoUpdate,
@@ -710,6 +758,7 @@ class ProfilesCompanion extends UpdateCompanion<RawProfile> {
     Expression<String>? overwriteType,
     Expression<int>? scriptId,
     Expression<String>? matchTarget,
+    Expression<String>? loginPassword,
     Expression<int>? autoUpdateDurationMillis,
     Expression<String>? subscriptionInfo,
     Expression<bool>? autoUpdate,
@@ -726,6 +775,7 @@ class ProfilesCompanion extends UpdateCompanion<RawProfile> {
       if (overwriteType != null) 'overwrite_type': overwriteType,
       if (scriptId != null) 'script_id': scriptId,
       if (matchTarget != null) 'match_target': matchTarget,
+      if (loginPassword != null) 'login_password': loginPassword,
       if (autoUpdateDurationMillis != null)
         'auto_update_duration_millis': autoUpdateDurationMillis,
       if (subscriptionInfo != null) 'subscription_info': subscriptionInfo,
@@ -745,6 +795,7 @@ class ProfilesCompanion extends UpdateCompanion<RawProfile> {
     Value<OverwriteType>? overwriteType,
     Value<int?>? scriptId,
     Value<String?>? matchTarget,
+    Value<String?>? loginPassword,
     Value<int>? autoUpdateDurationMillis,
     Value<SubscriptionInfo?>? subscriptionInfo,
     Value<bool>? autoUpdate,
@@ -761,6 +812,7 @@ class ProfilesCompanion extends UpdateCompanion<RawProfile> {
       overwriteType: overwriteType ?? this.overwriteType,
       scriptId: scriptId ?? this.scriptId,
       matchTarget: matchTarget ?? this.matchTarget,
+      loginPassword: loginPassword ?? this.loginPassword,
       autoUpdateDurationMillis:
           autoUpdateDurationMillis ?? this.autoUpdateDurationMillis,
       subscriptionInfo: subscriptionInfo ?? this.subscriptionInfo,
@@ -799,6 +851,9 @@ class ProfilesCompanion extends UpdateCompanion<RawProfile> {
     }
     if (matchTarget.present) {
       map['match_target'] = Variable<String>(matchTarget.value);
+    }
+    if (loginPassword.present) {
+      map['login_password'] = Variable<String>(loginPassword.value);
     }
     if (autoUpdateDurationMillis.present) {
       map['auto_update_duration_millis'] = Variable<int>(
@@ -840,6 +895,7 @@ class ProfilesCompanion extends UpdateCompanion<RawProfile> {
           ..write('overwriteType: $overwriteType, ')
           ..write('scriptId: $scriptId, ')
           ..write('matchTarget: $matchTarget, ')
+          ..write('loginPassword: $loginPassword, ')
           ..write('autoUpdateDurationMillis: $autoUpdateDurationMillis, ')
           ..write('subscriptionInfo: $subscriptionInfo, ')
           ..write('autoUpdate: $autoUpdate, ')
@@ -5304,6 +5360,7 @@ typedef $$ProfilesTableCreateCompanionBuilder =
       required OverwriteType overwriteType,
       Value<int?> scriptId,
       Value<String?> matchTarget,
+      Value<String?> loginPassword,
       required int autoUpdateDurationMillis,
       Value<SubscriptionInfo?> subscriptionInfo,
       required bool autoUpdate,
@@ -5321,6 +5378,7 @@ typedef $$ProfilesTableUpdateCompanionBuilder =
       Value<OverwriteType> overwriteType,
       Value<int?> scriptId,
       Value<String?> matchTarget,
+      Value<String?> loginPassword,
       Value<int> autoUpdateDurationMillis,
       Value<SubscriptionInfo?> subscriptionInfo,
       Value<bool> autoUpdate,
@@ -5437,6 +5495,11 @@ class $$ProfilesTableFilterComposer
 
   ColumnFilters<String> get matchTarget => $composableBuilder(
     column: $table.matchTarget,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get loginPassword => $composableBuilder(
+    column: $table.loginPassword,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5602,6 +5665,11 @@ class $$ProfilesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get loginPassword => $composableBuilder(
+    column: $table.loginPassword,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get autoUpdateDurationMillis => $composableBuilder(
     column: $table.autoUpdateDurationMillis,
     builder: (column) => ColumnOrderings(column),
@@ -5672,6 +5740,11 @@ class $$ProfilesTableAnnotationComposer
 
   GeneratedColumn<String> get matchTarget => $composableBuilder(
     column: $table.matchTarget,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get loginPassword => $composableBuilder(
+    column: $table.loginPassword,
     builder: (column) => column,
   );
 
@@ -5819,6 +5892,7 @@ class $$ProfilesTableTableManager
                 Value<OverwriteType> overwriteType = const Value.absent(),
                 Value<int?> scriptId = const Value.absent(),
                 Value<String?> matchTarget = const Value.absent(),
+                Value<String?> loginPassword = const Value.absent(),
                 Value<int> autoUpdateDurationMillis = const Value.absent(),
                 Value<SubscriptionInfo?> subscriptionInfo =
                     const Value.absent(),
@@ -5835,6 +5909,7 @@ class $$ProfilesTableTableManager
                 overwriteType: overwriteType,
                 scriptId: scriptId,
                 matchTarget: matchTarget,
+                loginPassword: loginPassword,
                 autoUpdateDurationMillis: autoUpdateDurationMillis,
                 subscriptionInfo: subscriptionInfo,
                 autoUpdate: autoUpdate,
@@ -5852,6 +5927,7 @@ class $$ProfilesTableTableManager
                 required OverwriteType overwriteType,
                 Value<int?> scriptId = const Value.absent(),
                 Value<String?> matchTarget = const Value.absent(),
+                Value<String?> loginPassword = const Value.absent(),
                 required int autoUpdateDurationMillis,
                 Value<SubscriptionInfo?> subscriptionInfo =
                     const Value.absent(),
@@ -5868,6 +5944,7 @@ class $$ProfilesTableTableManager
                 overwriteType: overwriteType,
                 scriptId: scriptId,
                 matchTarget: matchTarget,
+                loginPassword: loginPassword,
                 autoUpdateDurationMillis: autoUpdateDurationMillis,
                 subscriptionInfo: subscriptionInfo,
                 autoUpdate: autoUpdate,

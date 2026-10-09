@@ -16,6 +16,7 @@ void main() {
       overwriteType: OverwriteType.custom,
       scriptId: 2,
       matchTarget: 'Proxy',
+      loginPassword: 'secret',
       autoUpdateDurationMillis: 3600000,
       subscriptionInfo: const SubscriptionInfo(
         upload: 1,
@@ -29,8 +30,8 @@ void main() {
       order: 3,
     );
 
-    expect(profile.toColumns(true), hasLength(14));
-    expect(profile.toCompanion(true).toColumns(true), hasLength(14));
+    expect(profile.toColumns(true), hasLength(15));
+    expect(profile.toCompanion(true).toColumns(true), hasLength(15));
     expect(RawProfile.fromJson(profile.toJson()).toJson(), profile.toJson());
     expect(profile.copyWith(label: 'Next').label, 'Next');
     expect(
@@ -60,7 +61,7 @@ void main() {
       unfoldSet: {},
     );
     expect(emptyProfile.toColumns(true), hasLength(8));
-    expect(emptyProfile.toColumns(false), hasLength(14));
+    expect(emptyProfile.toColumns(false), hasLength(15));
     expect(emptyProfile.toCompanion(true).toColumns(true), hasLength(8));
 
     final insertedProfile = ProfilesCompanion.insert(
@@ -84,6 +85,7 @@ void main() {
         overwriteType: const Variable('custom'),
         scriptId: const Variable(2),
         matchTarget: const Variable('Proxy'),
+        loginPassword: const Variable('secret'),
         autoUpdateDurationMillis: const Variable(60),
         subscriptionInfo: const Variable('{}'),
         autoUpdate: const Variable(true),
@@ -91,7 +93,7 @@ void main() {
         unfoldSet: const Variable('[]'),
         order: const Variable(1),
       ).toColumns(false),
-      hasLength(14),
+      hasLength(15),
     );
 
     final script = RawScript(id: 2, label: 'Script', lastUpdateTime: date);

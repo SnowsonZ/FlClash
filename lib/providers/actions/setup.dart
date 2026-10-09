@@ -556,9 +556,11 @@ class SetupAction extends _$SetupAction {
     var profile = ref.read(currentProfileProvider) ?? recoverMissingProfile();
     // A refresh failure is surfaced by safeRun; setup keeps the old profile.
     final nextProfile = await globalState.safeRun(
-      () => profile?.checkAndUpdateAndCopy(
-        validate: (path) => _core.validateConfig(path),
-      ),
+      () => profile == null
+          ? Future<Profile?>.value(null)
+          : ref
+                .read(profilesActionProvider.notifier)
+                .checkAndUpdateDecrypted(profile),
     );
     if (nextProfile != null) {
       profile = nextProfile;

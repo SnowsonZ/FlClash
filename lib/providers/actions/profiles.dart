@@ -108,9 +108,10 @@ class ProfilesAction extends _$ProfilesAction {
         : null;
     try {
       ref.read(profilesProvider.notifier).put(profile, renameIn: renameIn);
-      final newProfile = await profile.update(
-        validate: (path) => _core.validateConfig(path),
-      );
+      final newProfile = await updateProfileDecrypted(profile);
+      if (newProfile == null) {
+        return;
+      }
       ref.read(profilesProvider.notifier).put(newProfile);
       if (profile.id == ref.read(currentProfileIdProvider)) {
         ref
@@ -124,6 +125,52 @@ class ProfilesAction extends _$ProfilesAction {
             .stop(profile.updatingKey, operation);
       }
     }
+  }
+
+  Future<Profile?> updateProfileDecrypted(Profile profile) async {
+    var current = profile;
+    while (true) {
+      try {
+        return await current.update(
+          validate: (path) => _core.validateConfig(path),
+        );
+      } on SubscriptionEncryptedException catch (error) {
+        final password = await _promptSubscriptionPassword(
+          passwordWrong: error.passwordWrong,
+        );
+        if (password == null) return null;
+        current = current.copyWith(loginPassword: password);
+      }
+    }
+  }
+
+  Future<Profile?> checkAndUpdateDecrypted(Profile profile) async {
+    if (profile.url.isEmpty) return null;
+    final file = File(await appPath.getProfilePath(profile.id.toString()));
+    if (await file.exists() && await file.length() > 0) return null;
+    return updateProfileDecrypted(profile);
+  }
+
+  Future<String?> _promptSubscriptionPassword({bool passwordWrong = false}) {
+    return dialogs.showCommonDialog<String>(
+      child: InputDialog(
+        title: passwordWrong
+            ? currentAppLocalizations.subscriptionPasswordWrongTip
+            : currentAppLocalizations.subscriptionLoginPassword,
+        labelText: currentAppLocalizations.subscriptionLoginPassword,
+        hintText: currentAppLocalizations.subscriptionLoginPasswordHint,
+        value: '',
+        obscureText: true,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return currentAppLocalizations.emptyTip(
+              currentAppLocalizations.subscriptionLoginPassword,
+            );
+          }
+          return null;
+        },
+      ),
+    );
   }
 
   Future<void> addProfileFormFile() async {
@@ -154,10 +201,7 @@ class ProfilesAction extends _$ProfilesAction {
     final profile = await globalState.loadingRun(
       tag: LoadingTag.profiles,
       () async {
-        return Profile.normal(
-          label: label,
-          url: url,
-        ).update(validate: (path) => _core.validateConfig(path));
+        return updateProfileDecrypted(Profile.normal(label: label, url: url));
       },
       title: currentAppLocalizations.addProfile,
     );
