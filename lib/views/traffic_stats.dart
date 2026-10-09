@@ -308,69 +308,66 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
     final appLocalizations = context.appLocalizations;
     return Padding(
       padding: EdgeInsets.fromLTRB(16, context.contentTopPadding + 8, 16, 8),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            SegmentedButton<TrafficStatsScope>(
-              segments: [
-                ButtonSegment(
-                  value: TrafficStatsScope.process,
-                  label: Text(appLocalizations.byApp),
-                ),
-                ButtonSegment(
-                  value: TrafficStatsScope.host,
-                  label: Text(appLocalizations.byService),
-                ),
-              ],
-              selected: {_scope},
-              onSelectionChanged: (selection) {
-                setState(() {
-                  _scope = selection.first;
-                  _liveSamples = const {};
-                });
-                restartPolling();
-              },
-            ),
-            const SizedBox(width: 12),
-            SegmentedButton<TrafficStatsRange>(
-              segments: [
-                ButtonSegment(
-                  value: TrafficStatsRange.today,
-                  label: Text(appLocalizations.trafficStatsToday),
-                ),
-                ButtonSegment(
-                  value: TrafficStatsRange.week,
-                  label: Text(appLocalizations.trafficStatsWeek),
-                ),
-                ButtonSegment(
-                  value: TrafficStatsRange.all,
-                  label: Text(appLocalizations.trafficStatsAll),
-                ),
-              ],
-              selected: {_range},
-              onSelectionChanged: (selection) {
-                setState(() {
-                  _range = selection.first;
-                });
-                restartPolling();
-              },
-            ),
-            const SizedBox(width: 12),
-            FilterChip(
-              label: Text(appLocalizations.proxyOnly),
-              selected: _proxyOnly,
-              onSelected: (value) {
-                setState(() {
-                  _proxyOnly = value;
-                });
-                restartPolling();
-              },
-            ),
-            const SizedBox(width: 12),
-            _buildSortMenu(context),
-          ],
-        ),
+      child: Wrap(
+        spacing: 12,
+        runSpacing: 8,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          SegmentedButton<TrafficStatsScope>(
+            segments: [
+              ButtonSegment(
+                value: TrafficStatsScope.process,
+                label: Text(appLocalizations.byApp),
+              ),
+              ButtonSegment(
+                value: TrafficStatsScope.host,
+                label: Text(appLocalizations.byService),
+              ),
+            ],
+            selected: {_scope},
+            onSelectionChanged: (selection) {
+              setState(() {
+                _scope = selection.first;
+                _liveSamples = const {};
+              });
+              restartPolling();
+            },
+          ),
+          SegmentedButton<TrafficStatsRange>(
+            segments: [
+              ButtonSegment(
+                value: TrafficStatsRange.today,
+                label: Text(appLocalizations.trafficStatsToday),
+              ),
+              ButtonSegment(
+                value: TrafficStatsRange.week,
+                label: Text(appLocalizations.trafficStatsWeek),
+              ),
+              ButtonSegment(
+                value: TrafficStatsRange.all,
+                label: Text(appLocalizations.trafficStatsAll),
+              ),
+            ],
+            selected: {_range},
+            onSelectionChanged: (selection) {
+              setState(() {
+                _range = selection.first;
+              });
+              restartPolling();
+            },
+          ),
+          FilterChip(
+            label: Text(appLocalizations.proxyOnly),
+            selected: _proxyOnly,
+            onSelected: (value) {
+              setState(() {
+                _proxyOnly = value;
+              });
+              restartPolling();
+            },
+          ),
+          _buildSortMenu(context),
+        ],
       ),
     );
   }
