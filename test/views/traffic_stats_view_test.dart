@@ -6,6 +6,7 @@ import 'package:fl_clash/database/database.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/action.dart' show trafficStatsDate;
+import 'package:fl_clash/providers/app.dart' show viewSizeProvider;
 import 'package:fl_clash/providers/core.dart';
 import 'package:fl_clash/state.dart';
 import 'package:fl_clash/views/traffic_stats.dart';
@@ -37,6 +38,7 @@ void main() {
         coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
       ],
     );
+    container.read(viewSizeProvider.notifier).state = const Size(1400, 1000);
     globalState.container = container;
   });
 
@@ -107,6 +109,17 @@ void main() {
     expect(find.text('curl'), findsOneWidget);
     expect(find.text('a.com'), findsNothing);
     expect(find.text('backupd'), findsNothing);
+  });
+
+  testWidgets('a narrow view drops the column headers', (tester) async {
+    container.read(viewSizeProvider.notifier).state = const Size(420, 800);
+    when(() => core.getTrafficStats()).thenAnswer((_) async => liveSnapshot());
+
+    await pumpView(tester);
+
+    expect(find.text('Speed'), findsNothing);
+    expect(find.text('Traffic'), findsNothing);
+    expect(find.text('curl'), findsOneWidget);
   });
 
   testWidgets('switching scope shows host rows', (tester) async {

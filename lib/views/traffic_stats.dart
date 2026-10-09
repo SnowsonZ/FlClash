@@ -258,6 +258,7 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.appLocalizations;
+    final isMobile = ref.watch(isMobileViewProvider);
     return CommonScaffold(
       title: PageLabel.trafficStats.label,
       iconActions: [
@@ -279,7 +280,7 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
               ),
               child: Column(
                 children: [
-                  _buildListHeader(context),
+                  if (!isMobile) _buildListHeader(context),
                   Expanded(
                     child: ListView.separated(
                       shrinkWrap: true,
@@ -290,7 +291,7 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
                       itemCount: _rows.length,
                       separatorBuilder: (_, _) => const Divider(height: 0),
                       itemBuilder: (context, index) {
-                        return _buildRow(context, _rows[index]);
+                        return _buildRow(context, _rows[index], isMobile);
                       },
                     ),
                   ),
@@ -411,6 +412,11 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
     );
   }
 
+  double _scaledWidth(BuildContext context, double base) {
+    final scale = MediaQuery.textScalerOf(context).scale(14) / 14;
+    return base * scale.clamp(1.0, 1.6);
+  }
+
   Widget _buildListHeader(BuildContext context) {
     final appLocalizations = context.appLocalizations;
     final style = context.textTheme.labelSmall?.copyWith(
@@ -422,7 +428,7 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(
-            width: _speedColumnWidth,
+            width: _scaledWidth(context, _speedColumnWidth),
             child: Text(
               appLocalizations.trafficStatsSpeed,
               style: style,
@@ -431,7 +437,7 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
           ),
           const SizedBox(width: _columnGap),
           SizedBox(
-            width: _trafficColumnWidth,
+            width: _scaledWidth(context, _trafficColumnWidth),
             child: Text(
               appLocalizations.trafficStatsTraffic,
               style: style,
@@ -463,13 +469,38 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
     );
   }
 
-  Widget _buildRow(BuildContext context, _TrafficStatsRow row) {
+  Widget _buildRow(BuildContext context, _TrafficStatsRow row, bool isMobile) {
     final appLocalizations = context.appLocalizations;
     final name = row.key.isEmpty ? appLocalizations.unknown : row.key;
     final downloadShow = _downloadOf(row).traffic;
     final uploadShow = _uploadOf(row).traffic;
     final downloadSpeedShow = _downloadSpeedOf(row).traffic;
     final uploadSpeedShow = _uploadSpeedOf(row).traffic;
+    if (isMobile) {
+      return ListItem(
+        title: Text(
+          name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: context.textTheme.bodyMedium?.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        subtitle: Text(
+          '${appLocalizations.trafficStatsConnections(row.connections)}   '
+          '↓ ${downloadShow.value} ${downloadShow.unit}   '
+          '↑ ${uploadShow.value} ${uploadShow.unit}',
+          style: context.textTheme.bodySmall?.copyWith(
+            color: context.colorScheme.onSurfaceVariant,
+          ),
+        ),
+        trailing: _buildMetricLines(
+          context,
+          '↓ ${downloadSpeedShow.value} ${downloadSpeedShow.unit}/s',
+          '↑ ${uploadSpeedShow.value} ${uploadSpeedShow.unit}/s',
+        ),
+      );
+    }
     return ListItem(
       title: Text(
         name,
@@ -489,7 +520,7 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            width: _speedColumnWidth,
+            width: _scaledWidth(context, _speedColumnWidth),
             child: _buildMetricLines(
               context,
               '↓ ${downloadSpeedShow.value} ${downloadSpeedShow.unit}/s',
@@ -498,7 +529,7 @@ class _TrafficStatsViewState extends ConsumerState<TrafficStatsView>
           ),
           const SizedBox(width: _columnGap),
           SizedBox(
-            width: _trafficColumnWidth,
+            width: _scaledWidth(context, _trafficColumnWidth),
             child: _buildMetricLines(
               context,
               '↓ ${downloadShow.value} ${downloadShow.unit}',
