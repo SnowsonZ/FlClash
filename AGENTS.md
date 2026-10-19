@@ -20,6 +20,8 @@ Read these only when the task touches their area:
 - [.agents/worktrees.md](.agents/worktrees.md): worktree hygiene across Claude Code, Codex, and Gemini.
 - [.agents/flutter-upgrade.md](.agents/flutter-upgrade.md): SDK-pinned workarounds to recheck before changing the
   Flutter version.
+- [.agents/local-environment.md](.agents/local-environment.md): workstation-specific checkout, Flutter, and installed
+  FlClash paths; read before local host or app-configuration work.
 - [.agents/skills.md](.agents/skills.md): index of repo-scoped skills in `.agents/skills/`.
 
 ## Highest Priority Rules
