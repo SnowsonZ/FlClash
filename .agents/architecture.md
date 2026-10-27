@@ -563,6 +563,10 @@ every proxy group is a provider, `select` groups included, and checking one test
 shown to cut the VPN's own network while the screen is off, holding back failures measured then needs only a screen
 on/off signal.
 
+## Encrypted Subscription Import
+
+`ProfilesAction` recognizes an encrypted subscription response by the `subscription-encryption: true` header. It prompts for the subscription password, then `lib/common/subscription_decrypt.dart` decrypts the v2rayN-compatible payload using AES-128-CBC, MD5(password) as the key, and the first 16 decoded payload bytes as the IV. The password is retained in `Profile.loginPassword` so later profile updates can use it; failed decryption returns to the password prompt with an incorrect-password message. Keep this protocol handling in the profile update path so importing and refreshing profiles share the same behavior.
+
 ## Database
 
 The app uses Drift/SQLite in `lib/database/`. `schemaVersion` in `lib/database/database.dart` is the migration
@@ -578,6 +582,13 @@ Tables:
 - `CustomProxies` (`custom_proxies`)
 - `IconRecords` (`icon_records`)
 - `ClashProviders` (`clash_providers`)
+- `TrafficStatRecords` (`traffic_stats`)
+
+### Traffic Statistics
+
+The core exposes cumulative traffic counters by process and host through `getTrafficStats`. `TrafficStatsAction` snapshots them every 30 seconds and stores daily deltas in `traffic_stats`, keyed by date, scope, and process/host key. Each row keeps the last core counters so the next snapshot adds only the delta; if a counter falls after a core restart, the new counter is counted from zero. A key missing on a new day uses its latest earlier row as the baseline, preserving traffic since the last flush across midnight.
+
+The statistics page combines saved daily rows with the current core snapshot, and offers today, the last seven days, or all history. Live rates come from page polling samples and are not persisted. Clearing statistics deletes the local rows and resets the core counters. `lib/providers/actions/traffic_stats.dart` owns collection and aggregation; `lib/views/traffic_stats.dart` owns filtering, sorting, and presentation.
 
 Rule scenes distinguish global added rules, profile added rules, profile custom rules, and disabled links. Rule and proxy-group ordering use fractional indexing.
 

@@ -29,8 +29,9 @@ A multi-platform proxy client based on ClashMeta. Simple to use, open source and
 - **One app for Android, Windows, macOS and Linux**, with x64 and ARM64 builds on the desktop.
 - **mihomo (Clash.Meta) core** with rule routing, proxy groups, latency tests, system proxy and TUN mode.
 - **Profiles** from a subscription link or a file, with a built-in editor, override scripts, and custom rules,
-  proxies and proxy groups.
+  proxies and proxy groups; encrypted v2rayN-style subscriptions prompt for their password when updated.
 - **Live views** of connections, requests, DNS queries and logs.
+- **Traffic statistics** by app or host, with upload/download totals, connection counts, live speeds, and period filters.
 - **Material You design** with dynamic color, light and dark themes, and layouts that adapt from phones to desktops.
 - **Backup and restore** through WebDAV or a local file.
 - **Platform touches**: a Quick Settings tile, per-app proxy and Android TV support on Android; a tray menu and

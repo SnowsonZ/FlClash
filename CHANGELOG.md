@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.8.99-stats.7 (2026-10-09)
+
+**Features**
+
+- **traffic-stats** Per-app and per-host traffic statistics with daily history (8f46593)
+- **profiles** Import v2rayN-style encrypted subscriptions with a password (a918df4)
+
 ## v0.8.99 (2026-10-03)
 
 **Features**
