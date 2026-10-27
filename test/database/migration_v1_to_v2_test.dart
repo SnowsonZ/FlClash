@@ -187,6 +187,37 @@ void main() {
     },
   );
 
+  test(
+    'a v2 database missing core tables recreates them before later steps',
+    () async {
+      raw.execute('DROP TABLE proxy_groups');
+      raw.execute('DROP TABLE icon_records');
+      raw.execute('PRAGMA user_version = 2');
+
+      final database = await openAndMigrate();
+
+      expect(_hasTable(raw, 'proxy_groups'), isTrue);
+      expect(
+        _columnsOf(raw, 'proxy_groups'),
+        containsAll(['tolerance', 'strategy']),
+      );
+      expect(_hasTable(raw, 'icon_records'), isTrue);
+      expect(_userVersion(raw), 12);
+      expect(
+        raw
+            .select('SELECT COUNT(*) AS count FROM proxy_groups')
+            .single['count'],
+        0,
+      );
+      expect(
+        raw
+            .select('SELECT COUNT(*) AS count FROM icon_records')
+            .single['count'],
+        0,
+      );
+    },
+  );
+
   test('the v6 upgrade creates clash_providers', () async {
     _downgradeToV5(raw);
     expect(_hasTable(raw, 'clash_providers'), isFalse);

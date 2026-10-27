@@ -62,9 +62,11 @@ class Database extends _$Database {
   MigrationStrategy get migration {
     return MigrationStrategy(
       onUpgrade: (m, from, to) async {
+        // A database at this version can still lack these tables. Later column
+        // migrations depend on them, so repair them before advancing the schema.
+        await _createTableIfMissing(m, proxyGroups);
+        await _createTableIfMissing(m, iconRecords);
         if (from < 2) {
-          await m.createTable(proxyGroups);
-          await m.createTable(iconRecords);
           await _resetOrders();
           await _migrateRules(m);
         }
